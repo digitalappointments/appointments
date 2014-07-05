@@ -1,6 +1,6 @@
 <?php
 
-class DatabaseException extends Exception
+class DatabaseException extends BasicException
 {
     const PrepareFailed         = 1;
     const BindParametersFailed  = 2;

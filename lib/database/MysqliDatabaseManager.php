@@ -14,7 +14,7 @@ class MysqliDatabaseManager extends DBManager
         if ($dbConfig) {
             $this->dbConfig = $dbConfig;
         } else {
-            $this->dbConfig = SugarConfig::getDatabaseConfiguration();
+            $this->dbConfig = Config::getDatabaseConfiguration();
         }
     }
 

@@ -21,14 +21,14 @@ class DBManagerFactory
             self::reset();
         }
         if (empty(self::$dbm)) {
-            $dbConfig = SugarConfig::getDatabaseConfiguration();
+            $dbConfig = Config::getDatabaseConfiguration();
             $dbmClassName = $dbConfig['dbManagerClassName'];
             $dbmClassPath = $dbConfig['dbManagerClassPath'];
             $dbmFileName  = "{$dbmClassPath}/{$dbmClassName}.php";
             if (file_exists($dbmFileName)) {
                 include_once($dbmFileName);
             }
-            self::$dbm = SugarClassLoader::getInstance($dbmClassName);
+            self::$dbm = ClassLoader::getInstance($dbmClassName);
             self::$dbm->dbConfig = $dbConfig;
             self::$dbm->connect();
         }
