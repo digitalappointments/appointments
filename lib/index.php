@@ -1,5 +1,16 @@
 <?php
- $args=(!empty($_SERVER['argc']) && $_SERVER['argc'] > 0);
+if (php_sapi_name() == 'cli') {
+    $args = $_SERVER['argv'];
+    $argc = $_SERVER['argc'];
+} else {
+    parse_str($_SERVER['QUERY_STRING'], $args);
+    if (empty($argv)) {
+       $argv = array();
+    }
+    $argc = count($args);
+}
+
+$args=($argc > 0);
 ?>
 
 <html>
