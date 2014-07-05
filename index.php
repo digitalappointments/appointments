@@ -5,4 +5,5 @@ if (file_exists('lib/index.php')) {
 } else {
     $stop = "HERE";
 }
+ 
 ?>
