@@ -1,4 +1,14 @@
 <?php
+
+ob_start();
+
+include_once(dirname(__FILE__).'/env/entrypoint.php');
+define('ENTRY_POINT_TYPE', 'http');
+
+$controller = new Controller();
+$controller->execute();
+
+
 if (php_sapi_name() == 'cli') {
     $args = $_SERVER['argv'];
     $argc = $_SERVER['argc'];

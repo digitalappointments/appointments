@@ -1,0 +1,8 @@
+{
+    "minimum-stability" : "dev",
+    "require": {
+        "apache/log4php": "2.3.*",
+        "mandrill/mandrill": "1.0.*",
+        "aws/aws-sdk-php": "2.*"
+    }
+}
