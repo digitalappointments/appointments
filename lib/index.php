@@ -1,7 +1,5 @@
 <?php
 
-ob_start();
-
 include_once(dirname(__FILE__).'/env/entrypoint.php');
 define('ENTRY_POINT_TYPE', 'http');
 
