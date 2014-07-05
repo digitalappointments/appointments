@@ -1,0 +1,12 @@
+Options +FollowSymLinks -Indexes 
+SetOutputFilter DEFLATE
+RewriteEngine On
+RewriteBase /appointments
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^rest/(.*)$ appointments/lib/rest/rest.php?__url=$1 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)$ appointments/lib/index.php?__args=$1 [L,QSA]
