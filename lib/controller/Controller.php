@@ -16,7 +16,8 @@ class Controller
      */
     public function execute()
     {
-        ob_start();
+       // ob_start();
+
         try {
 
             $dbm = DBManagerFactory::getDatabaseManager();
@@ -28,6 +29,21 @@ class Controller
         } catch ( Exception $e ) {
             $this->handleException($e);
         }
+    }
+
+
+    /**
+     * Handles exception responses
+     *
+     * @param Exception $exception
+     */
+    protected function handleException(Exception $exception)
+    {
+        // $httpError = $exception->getHttpCode();
+        // $errorLabel = $exception->getErrorLabel();
+        $message = $exception->getMessage();
+
+        Log::error("Exception Thrown: {$message}");
     }
 }
 
