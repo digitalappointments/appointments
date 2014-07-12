@@ -14,7 +14,7 @@ class RestClientInfo
 
     public static function fromArray(array $params)
     {
-        $clientInfo = new ClientInfo();
+        $clientInfo = new RestClientInfo();
         $clientInfo->id = empty($params['id']) ? '' : $params['id'];
         $clientInfo->api_user = empty($params['api_user']) ? '' : $params['api_user'];
         $clientInfo->api_instance = empty($params['api_instance']) ? '' : $params['api_instance'];

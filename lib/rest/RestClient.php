@@ -45,11 +45,11 @@ class RestClient
     }
 
     /**
-     * @param ClientInfo $clientInfo
+     * @param RestClientInfo $clientInfo
      * @return bool  true if success
      * @throws Exception
      */
-    public function trackClientRequest(ClientInfo &$clientInfo) {
+    public function trackClientRequest(RestClientInfo &$clientInfo) {
         if (!empty($clientInfo->id)) {
             $info = $this->getClientInfoFromId($clientInfo->id);
         } else {
@@ -175,7 +175,7 @@ class RestClient
     /**
      * @access public
      * @param string $id required
-     * @return ClientInfo $clientInfo  - null if not found
+     * @return RestClientInfo $clientInfo  - null if not found
      */
     public function getClientInfoFromId($id=null)
     {
@@ -193,7 +193,7 @@ class RestClient
                 $this->dbm->bindParameters($stmt, $bindTemplate, $bindParams);
                 $this->dbm->execute($stmt);
                 if ($this->dbm->getErrno() == 0 && $row = $this->dbm->fetchResult($stmt, self::$api_fields)) {
-                    $clientInfo = ClientInfo::fromArray($row);
+                    $clientInfo = RestClientInfo::fromArray($row);
                 }
                 $this->dbm->closeStatement($stmt);
                 return $clientInfo;
@@ -217,7 +217,7 @@ class RestClient
     /**
      * @access public
      * @param string $id required
-     * @return ClientInfo $clientInfo  - null if not found
+     * @return RestClientInfo $clientInfo  - null if not found
      */
     public function getClientInfoFromApiData($apiUser, $apiInstance, $apiSiteUrl)
     {
@@ -234,7 +234,7 @@ class RestClient
             $this->dbm->bindParameters($stmt, $bindTemplate, $bindParams);
             $this->dbm->execute($stmt);
             if ($this->dbm->getErrno() == 0 && $row = $this->dbm->fetchResult($stmt, $this->database_columns)) {
-                $clientInfo = ClientInfo::fromArray($row);
+                $clientInfo = RestClientInfo::fromArray($row);
             }
             $this->dbm->closeStatement($stmt);
             return $clientInfo;
