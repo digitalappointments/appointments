@@ -307,11 +307,11 @@ class RestService extends ServiceBase
      */
     protected function authenticateUser()
     {
-        if (empty(self::$global_server['HTTP_API_USER']) ||
-            empty(self::$global_server['HTTP_API_INSTANCE']) ||
-            empty(self::$global_server['HTTP_API_SITE_URL'])) {
-            throw new ServiceApiExceptionNotAuthorized("Authentication Tokens Missing or Invalid");
-        }
+//        if (empty(self::$global_server['HTTP_API_USER']) ||
+//            empty(self::$global_server['HTTP_API_INSTANCE']) ||
+//            empty(self::$global_server['HTTP_API_SITE_URL'])) {
+//            throw new ServiceApiExceptionNotAuthorized("Authentication Tokens Missing or Invalid");
+//        }
 
         $userCredentials = array (
             "api_user" => self::$global_server['HTTP_API_USER'],
