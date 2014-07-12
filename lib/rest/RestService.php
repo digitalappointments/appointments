@@ -331,16 +331,18 @@ class RestService extends ServiceBase
         /*-- Track All Authorized Requests --*/
         $restClient = new RestClient();
         $clientInfo = RestClientInfo::fromArray($userCredentials);
-        try {
-            $restClient->trackClientRequest($clientInfo);
 
-            $logMessage = sprintf("CUSTOMER IDENTITY:%s FROM USER:%s INSTANCE:%s SITE_URL:%s",
-                $clientInfo->id, $clientInfo->api_user, $clientInfo->api_instance, $clientInfo->api_site_url);
-            Log::debug($logMessage);
 
-        } catch(Exception $e) {
-            return null;
-        }
+//        try {
+//            $restClient->trackClientRequest($clientInfo);
+//
+//            $logMessage = sprintf("CUSTOMER IDENTITY:%s FROM USER:%s INSTANCE:%s SITE_URL:%s",
+//                $clientInfo->id, $clientInfo->api_user, $clientInfo->api_instance, $clientInfo->api_site_url);
+//            Log::debug($logMessage);
+//
+//        } catch(Exception $e) {
+//            return null;
+//        }
 
         return $clientInfo;
     }
@@ -633,7 +635,7 @@ class RestService extends ServiceBase
         if (!empty($endpoints_map[$map_key])) {
             $className = $endpoints_map[$map_key];
 
-            $fileName = "rest/api/{$versionLabel}/{$className}.php";
+            $fileName = "lib/rest/api/{$versionLabel}/{$className}.php";
             if (file_exists($fileName)) {
                 include_once($fileName);
             }

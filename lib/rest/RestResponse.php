@@ -338,4 +338,3 @@ class RestResponse extends Zend_Http_Response
     }
 
 }
-
