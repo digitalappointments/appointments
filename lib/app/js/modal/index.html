@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style>
+ body {
+     background-color: #efefef;
+ }
+
+ body, html, input {
+     font-family:Verdana, Arial, Helvetica, sans-serif;
+     font-size:12px;
+     color: #333333;
+ }
+
+ .info {
+     font-style:italic;
+     font-size: 0.9em;
+     color: #666666;
+ }
+</style>
+<link rel="stylesheet" type="text/css" href="/local-js/modal/subModal.css" />
+<script type="text/javascript" src="/local-js/modal/subModal.js"></script>
+
+<script type="text/javascript">
+function onResponse(returnVal) {
+  alert("Back !");
+}
+</script>
+
+</head>
+<body>
+
+<div style="width:500px;">
+<h1>subModal test page</h1>
+<p>
+This is a test page for the subModal - a DHTML modal dialog solution.
+</p>
+<p>
+To check out a demonstration, click the button below.
+</p>
+
+
+
+<button onclick="showPopWin('Sign-In', 'pushyads_signin.html', 400, 130, onResponse);">show modal window button</button>
+
+<br>&nbsp;<br>
+
+<form>
+    <select>
+        <option>yes, it deals with selects too for you IE users...</option>
+    </select>
+</form>
+</p>
+</div>
+
+</body>
+</html>

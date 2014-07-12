@@ -1,0 +1,518 @@
+body {
+  top:0;
+  left:0;
+  margin:0;
+  padding:0;
+  font-family: Tahoma;
+  font-size: 13px;
+  color:#502700;
+  background:f0e68c;
+  background:bdb76b;
+  background:#F0E8C0;
+  background:eee8aa;
+}
+
+.menu {
+  font-family: Tahoma;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration:none;
+  color:#ffff00;
+}
+
+
+a.signin:link {
+     color: #E9AE38;
+     text-decoration:none;
+}
+a.signin:active {
+     color: #E9AE38;
+     text-decoration:none;
+}
+a.signin:visited {
+     color: #E9AE38;
+     text-decoration:none;
+}
+a.signin:hover {
+     color: #FF0000;
+     text-decoration:underline;
+}
+
+a.signup:link {
+     color: #E9AE38;
+     text-decoration:none;
+}
+a.signup:active {
+     color: #E9AE38;
+     text-decoration:none;
+}
+a.signup:visited {
+     color: #E9AE38;
+     text-decoration:none;
+}
+a.signup:hover {
+     color: #FF0000;
+     text-decoration:underline;
+}
+
+
+/*------------------------*/
+.roundedcornr_box_736587 {
+    background: url(../images/corners/roundedcornr_736587_tl.png) no-repeat top left;
+}
+.roundedcornr_top_736587 {
+    background: url(../images/corners/roundedcornr_736587_tr.png) no-repeat top right;
+}
+.roundedcornr_bottom_736587 {
+    background: url(../images/corners/roundedcornr_736587_bl.png) no-repeat bottom left;
+}
+.roundedcornr_bottom_736587 div {
+    background: url(../images/corners/roundedcornr_736587_br.png) no-repeat bottom right;
+}
+.roundedcornr_content_736587 {
+    background: url(../images/corners/roundedcornr_736587_r.png) top right repeat-y;
+}
+
+.roundedcornr_top_736587 div,.roundedcornr_top_736587,
+.roundedcornr_bottom_736587 div, .roundedcornr_bottom_736587 {
+    width: 100%;
+    height: 15px;
+    font-size: 1px;
+}
+.roundedcornr_content_736587, .roundedcornr_bottom_736587 {
+    margin-top: -19px;
+}
+.roundedcornr_content_736587 { padding: 0 15px; }
+/*------------------------*/
+
+
+/*---- Signup and Login dialogs ----*/
+.signcol1 {
+   background-color:#F7F7F7;
+   vertical-align:middle;
+   height:22px;
+   text-align: right;
+}
+
+.signcol2 {
+   background-color:#F7F7F7;
+   vertical-align:middle;
+   text-align: left;
+}
+
+.signlabel {
+   background-color:#F7F7F7;
+   vertical-align:middle;
+   height:22px;
+   width:100%;
+   text-align: left;
+}
+
+.signinput {
+   background-color:#F7F7F7;
+   vertical-align:middle;
+   text-align: left;
+}
+/*------------------------*/
+
+
+.standard_title_2 {
+  font-family: Arial;Tahoma;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.standard_text {
+  font-family: Tahoma;
+  font-size: 13px;
+  color:#502700;
+}
+
+.text_block {
+  padding-top:  10px;
+  padding-left: 15px;
+  padding-right:15px;
+  font-family: Tahoma;
+  font-size: 13px;
+  color:#502700;
+}
+
+.bordered_text_block {
+  padding-top:  20px;
+  padding-left: 15px;
+  padding-right:15px;
+  font-family: Tahoma;
+  font-size: 14px;
+  color:#502700;
+}
+
+
+/* Text aligned to the bottom of the image: img */
+.textbottom {vertical-align:text-bottom;}
+
+/* Text aligned to the middle of the image: img */
+.textmiddle {vertical-align:middle;}
+
+/* Text aligned to the top of the image: img */
+.texttop {vertical-align:top;}
+
+/* Text aligned to the baseline of the image: img */
+.textbaseline {vertical-align:baseline;}
+
+
+
+
+
+.background {
+   background-repeat: repeat-x;
+   background-image: url('http://pds1106.s3.amazonaws.com/images/gray-stripes.gif');
+   background-attachment: fixed;
+   background-color: #333333;
+   font-family: Tahoma,Verdana,Arial;
+   scrollbar-base-color: #FD9B00;
+   scrollbar-arrow-color: #B26B00;
+   scrollbar-DarkShadow-Color: 753F00;
+   color: #333330;
+}
+
+
+.border_lt1 {
+   border-left:  2px solid #999999;
+}
+
+.border_rt1 {
+   border-right:  2px solid #999999;
+}
+
+.bdr_crnr1 {
+   border-left:  3px double #000000;
+   border-bottom:  2px solid #999999;
+}
+.bdr_crnr2 {
+   border-left:  1px solid #000000;
+   border-bottom:  2px solid #999999;
+}
+.bdr_crnr3 {
+   border-left:  3px double #000000;
+   border-bottom:  1px solid #999999;
+}
+.bdr_crnr4 {
+   border-left:  1px solid #000000;
+   border-bottom:  1px solid #999999;
+}
+
+.shadow {
+   background-image: url('http://pds1106.s3.amazonaws.com/images/shadow2.png');
+   background-color: #1A1A1A;
+}
+
+.videoskin {
+   background-repeat: no-repeat;
+   background-image: url('http://pds1106.s3.amazonaws.com/images/video-skin-shadow.png');
+   background-color: transparent;
+}
+.videosmscreen {
+   background-repeat: no-repeat;
+   background-image: url('http://pds1106.s3.amazonaws.com/images/video-screen_sm.png');
+   background-color: transparent;
+}
+.videoscreen {
+   background-repeat: no-repeat;
+   background-image: url('https://pds1106.s3.amazonaws.com/images/video-screen.png');
+   background-color: transparent;
+}
+.playlist {
+   background-repeat: no-repeat;
+   background-image: url('https://pds1106.s3.amazonaws.com/player/images/playlist.png');
+   background-color: transparent;
+}
+.playlist_shadow {
+   background-repeat: no-repeat;
+   background-image: url('http://pds1106.s3.amazonaws.com/player/images/playlist_shadow.png');
+   background-color: transparent;
+}
+.playlist_monitor {
+   background-repeat: no-repeat;
+   background-image: url('https://pds1106.s3.amazonaws.com/player/images/playlist_monitor.png');
+   background-color: transparent;
+}
+.vdisplay {
+   padding-top:5px;
+   padding-bottom:10px;
+   padding-left:15px;
+   font-family: mono;
+   font-size: 14px;
+}
+
+
+/*-------------------------------------------------------------*/
+/* TEXT Fonts, Styles, Colors                   */
+/*-------------------------------------------------------------*/
+
+/*--------- Often used Combinations ------------*/
+.text
+  {
+    font-family: Tahoma,Verdana,Arial;
+    font-size:   14px;
+    font-weight: normal;
+    color : #333B30;
+  }
+
+.smalltext
+  {
+    font-family: Tahoma,Verdana,Arial;
+    font-size:   12px;
+    font-weight: normal;
+    color : #333B30;
+  }
+
+.legaltext
+  {
+    font-family: Tahoma,Verdana,Arial;
+    font-size:   12px;
+    font-weight: normal;
+    color: #E9AE38;
+  }
+
+.largetext {
+    font-family: Tahoma,Verdana,Arial;
+    font-size:   16px;
+    font-weight: normal;
+    color : #333B30;
+}
+
+.tinytext
+  {
+    font-family: Tahoma,Verdana,Arial;
+    font-size:   10px;
+    font-weight: normal;
+    color : #333B30;
+  }
+
+.required
+     {
+       font-family: Tahoma,Verdana,Arial;
+       font-size:   16px;
+       font-weight: bold;
+       color:  #CC0000;
+     }
+
+.error
+     {
+       font-family: Tahoma,Verdana,Arial;
+       font-size:   12px;
+       font-weight: bold;
+       color:  #AA0000;
+     }
+
+.tinymono {
+       font-family: Courier;
+       font-size:   10px;
+       font-weight: normal;
+     }
+
+
+.smallmono {
+       font-family: Courier;
+       font-size:   12px;
+       font-weight: normal;
+     }
+
+.smallmonobold {
+       font-family: Courier;
+       font-size:   12px;
+       font-weight: bold;
+     }
+
+.normalmono {
+       font-family: Courier;
+       font-size:   14px;
+       font-weight: normal;
+     }
+
+.normalmonobold {
+       font-family: Courier;
+       font-size:   14px;
+       font-weight: bold;
+     }
+
+
+/*------ Core Colors ------*/
+
+.red {
+  color: #CC0000;
+}
+.lightred {
+  color: #FF0000;
+}
+.darkred {
+  color: #990000;
+}
+.blue {
+  color: #0000DD;
+}
+.lightblue {
+  color: #0000FF;
+}
+.darkblue {
+  color: #003F75;
+}
+.white {
+  color: #FFFFFF;
+}
+.black {
+  color: #000000;
+}
+.gray {
+  color: #C0C0C0;
+}
+.darkgray {
+  color: #808080;
+}
+.gold {
+  color: #FFCC00;
+}
+.darkgold {
+  color: #E1B500;
+}
+.defaultcolor {
+  color: #2C3D4E;
+}
+.defaultcolor2 {
+  color: #475971;
+}
+.green {
+   color: 0E6600;
+}
+.lightgreen {
+   color: CBFFC2;
+}
+.darkgreen {
+   color: 0C5200;
+}
+.orange {
+   color: FFAA00;
+}
+.darkorange {
+   color: CC8800;
+}
+
+
+
+
+/*---------- Bold/Normal/Underline ----------*/
+.bold {
+  font-weight: bold;
+}
+.normal {
+  font-weight: normal;
+}
+
+.doubleline {
+  border-bottom: 3px double #000000;
+  padding-bottom: 2px;
+}
+
+/*--------- Core Fonts --------*/
+.arial {
+  font-family: Arial;
+}
+.tahoma {
+  font-family: Tahoma,Arial;
+}
+.verdana {
+  font-family: Verdana,arial;
+}
+.mono {
+  font-family: Courier;
+}
+.impact {
+  font-family: Impact;
+}
+
+.times {
+  font-family: Times;
+}
+
+/*-------- Core Sizes ----------*/
+.size1 {
+  font-size: 1px;
+}
+.size2 {
+  font-size: 2px;
+}
+.size3 {
+  font-size: 3px;
+}
+.size4 {
+  font-size: 4px;
+}
+.size5 {
+  font-size: 5px;
+}
+.size6 {
+  font-size: 6px;
+}
+.size7 {
+  font-size: 7px;
+}
+.size8 {
+  font-size: 8px;
+}
+.size9 {
+  font-size: 9px;
+}
+.size10 {
+  font-size: 10px;
+}
+.size11 {
+  font-size: 11px;
+}
+.size12 {
+  font-size: 12px;
+}
+.size13 {
+  font-size: 13px;
+}
+.size14 {
+  font-size: 14px;
+}
+.size15 {
+  font-size: 15px;
+}
+.size16 {
+  font-size: 16px;
+}
+.size17 {
+  font-size: 17px;
+}
+.size18 {
+  font-size: 18px;
+}
+.size20 {
+  font-size: 20px;
+}
+.size22 {
+  font-size: 22px;
+}
+.size24 {
+  font-size: 24px;
+}
+.size26 {
+  font-size: 26px;
+}
+.size28 {
+  font-size: 28px;
+}
+.size30 {
+  font-size: 28px;
+}
+.size32 {
+  font-size: 32px;
+}
+.size34 {
+  font-size: 28px;
+}
+.size36 {
+  font-size: 36px;
+}

@@ -28,7 +28,7 @@ class DBManagerFactory
             if (file_exists($dbmFileName)) {
                 include_once($dbmFileName);
             }
-            self::$dbm = ClassLoader::getInstance($dbmClassName);
+            self::$dbm = SystemClassLoader::getInstance($dbmClassName);
             self::$dbm->dbConfig = $dbConfig;
             self::$dbm->connect();
         }
