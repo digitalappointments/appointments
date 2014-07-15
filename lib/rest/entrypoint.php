@@ -1,17 +1,5 @@
 <?php
-chdir(dirname(__FILE__).'/../../');
-
-require_once("vendor/autoload.php");
-require_once("lib/env/Config.php");
-require_once("lib/logger/Log.php");
-require_once("lib/utils/utils.php");
-require_once("lib/include/HttpRequestInfo.php");
-require_once("lib/include/HttpResponseInfo.php");
-require_once("lib/include/BaseController.php");
-require_once("lib/utils/SystemClassLoader.php");
-require_once("lib/exception/ServiceException.php");
-require_once("lib/database/DBManagerFactory.php");
-
+require_once(dirname(__FILE__)."/../../env/bootstrap.php");
 define('ENTRY_POINT_TYPE', 'api');
 
 require_once("lib/rest/RestService.php");

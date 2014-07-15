@@ -1,16 +1,15 @@
 <?php
+require_once(dirname(__FILE__)."/../../env/bootstrap.php");
+define('ENTRY_POINT_TYPE', 'daemon');
+
+require_once("lib/model/MailServiceSendParameters.php");
+require_once 'lib/model/ServiceResult.php';
 
 $debug = false;  // Debug More to Log File
 $trace = false;  // Print Status To Console
 $once  = false;  // Run Once then Quit
 
 $GLOBALS['logger_file_name'] = "cron.log";
-
-require_once(dirname(__FILE__)."/../../lib/env/entrypoint.php");
-define('ENTRY_POINT_TYPE', 'daemon');
-
-require_once("lib/model/MailServiceSendParameters.php");
-require_once 'lib/model/ServiceResult.php';
 
 $dbm = DBManagerFactory::getDatabaseManager();
 if (empty($dbm)) {
