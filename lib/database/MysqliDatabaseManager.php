@@ -2,6 +2,7 @@
 
 class MysqliDatabaseManager extends DBManager
 {
+    public $debug=false;
     public $dbConfig;
     protected $mysqli;
     protected $preparedStatements = array(false);
@@ -16,6 +17,7 @@ class MysqliDatabaseManager extends DBManager
         } else {
             $this->dbConfig = Config::getDatabaseConfiguration();
         }
+        D::$dbm = $this;
     }
 
     /**
@@ -208,9 +210,9 @@ class MysqliDatabaseManager extends DBManager
             }
         }
         if ($this->getErrno() !== 0) {
-            //$msg = "Database - execute failed";
-            //$logmsg = $msg . ": " . $this->getLastError();
-            //Log::error($logmsg);
+            $msg = "Database - execute failed";
+            $logmsg = $msg . ": " . $this->getLastError();
+            Log::error($logmsg);
             return false;
         }
         return !!$res_exec;

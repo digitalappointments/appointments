@@ -52,6 +52,11 @@ function create_guid()
 
 }
 
+function GUID()
+{
+    return create_guid();
+}
+
 function create_guid_section($characters)
 {
     $return = "";
@@ -92,5 +97,76 @@ function translate($string, $selectedValue='')
     }
 
     return $returnValue;
+}
+
+/**
+ * Hash a plaintext password for use with our APIs
+ *
+ * @param string $password    required=true
+ * @param string $username    required=true
+ * @return string
+ */
+function hashApiPassword($password, $username)
+{
+    $md5Password = md5($password);
+    return hashPassword($md5Password, $username);
+}
+
+/**
+ * The one function for hashing a plaintext password
+ * @param string  $password  The plaintext password
+ * @param string  $username  The username (becomes part of the hash)
+ * @param boolean $noSalt    If true, hash will NOT be salted
+ * @return string   A hex encoded string representation of the hash
+ */
+function hashPassword($password, $username, $noSalt=false)
+{
+    if($username=='') {
+        Log::$l->error("hashPassword() called with no username. " . nice_backtrace(true));
+    }
+    if(!Config::get('security.pwhash')) {
+        $noSalt = true;
+    }
+    if($noSalt) {
+        $salted = $password;
+    } else {
+        $salt1 = md5($username, true);
+        $salt2 = 'llbB3U49BwSWd0EB!?cn9TKDsqHHo0k3';
+        $salted = $salt2 . $password . $salt1;
+    }
+    $hash = hash('sha512', $salted);
+    return $hash;
+}
+
+/**
+ * Generates a backtrace without all the nasty recursive args
+ * @param $bString True if you want the result as a string, false for an array
+ * @return mixed An array or a string
+ */
+function nice_backtrace($bString=false, $oException=null)
+{
+    if( $oException )
+        $bt = $oException->getTrace();
+    else
+        $bt = debug_backtrace();
+    foreach( $bt as $num=>$call ) {
+        unset( $bt[$num]['args'] );
+        unset( $bt[$num]['object'] );
+    }
+    if( $bString ) return print_r( $bt, true );
+    return $bt;
+}
+
+/**
+ * Returns a string of comma separated question marks, one for each element of $input
+ *
+ * @param array $input
+ * @return string
+ */
+function sqlPlaceholder( &$input )
+{
+    if(count($input)==0) return "";
+    $result = "(" . str_repeat("?,", count($input)-1) . "?)";
+    return $result;
 }
 

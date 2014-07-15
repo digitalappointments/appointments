@@ -1,6 +1,7 @@
 <?php
 require_once('lib/database/DatabaseException.php');
 require_once('lib/database/DBManager.php');
+require_once('lib/database/D.php');
 
 class DBManagerFactory
 {
@@ -32,6 +33,7 @@ class DBManagerFactory
             self::$dbm->dbConfig = $dbConfig;
             self::$dbm->connect();
         }
+        D::$dbm = self::$dbm;;
         return self::$dbm;
     }
 
