@@ -2,9 +2,9 @@
 
 class Account extends BaseObject
 {
-    protected $tableName = 'account';
+    public $tableName = 'account';
 
-    protected $fields = array(
+    public $fields = array(
         'id' => array(
             'type' => 'guid',
             'len'  => 36,
@@ -22,6 +22,7 @@ class Account extends BaseObject
         ),
         'dateModified' => array(
             'type' => 'datetime',
+            'write_reset' => true,
         ),
         'deleted' => array(
             'type' => 'int',
@@ -80,11 +81,4 @@ class Account extends BaseObject
         ),
     );
 
-    /**
-     * Constructor returns an Account
-     */
-    public function __construct($values=array())
-    {
-        parent::__construct($values);
-    }
 }

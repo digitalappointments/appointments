@@ -2,7 +2,7 @@
 require_once(dirname(__FILE__) . "/../../lib/env/bootstrap.php");
 define('ENTRY_POINT_TYPE', 'test');
 
-include_once("lib/model/account/Account.php");
+include_once("lib/model/account/AccountServices.php");
 
 /**
 mysql> show fields from account;
@@ -45,21 +45,64 @@ mysql> show fields from account;
 //
 //
 //
+try {
 
-$account = new Account();
+//    $order_by  = empty($options['order_by']) ? false : $options['order_by'];
+//    $order_dir = empty($options['order_dir']) ? "ASC" : $options['order_dir'];
+//    $last_id  = empty($options['last_id']) ? '0' : $options['last_id'];
+//    $max_rows = empty($options['max_num']) ? self::DEFAULT_ROWS_PER_REQUEST : (int) $options['max_num'];
 
-$account->setName('Tri-Star, LTD');
-$account->setDateEntered('2014-08-24 16:15:00');
-$account->setDateModified('2014-08-25 10:15:00');
 
-$account->insert();
-print_r($account);
+    $filterOptions = array(
+        "order_by"  => "id",
+        "order_dir" => "DESC",
+        "max_num" => 10,
+    );
+    $accountServices = new AccountServices();
+    $rows = $accountServices->filter($filterOptions);
+    printf("ROWS = %d\n",count($rows));
 
-$account2 = new Account();
-$account2->retrieve($account->getId());
-print_r($account2);
+    foreach($rows AS $account) {
+       printf("%-40s %s\n",$account->id, $account->name);
+    }
 
-$account->delete();
+    exit(0);
+
+
+    $account = new Account();
+
+    $account->setName('Tri-Star, LTD');
+    $account->setDateEntered('2014-08-24 16:15:00');
+    $account->setDateModified('2014-08-25 10:15:00');
+
+    $account->setName('AAA');
+    $resp = $account->upsert();
+    $account->setName('BBB');
+    $resp = $account->upsert();
+    $account->setName('CCC');
+    $resp = $account->upsert();
+
+    $account2 = new Account();
+    $account2->retrieve($account->getId());
+    print_r($account2);
+
+    $account->setName('Mary Had A little Lamb');
+    $account->update();
+
+    $account3 = new Account();
+    $account3->setName("Hello World");
+    $account3->insert();
+
+    $account4 = new Account();
+    $account4->retrieve($account3->getId());
+    $account4->setName('Once Upon A Time');
+    $res1 = $account4->update();
+    $res2 = $account4->update();
+    printf("%s : %s\n",$res1,$res2);
+
+} catch(Exception $e) {
+    print_r($e);
+}
 
 exit;
 
