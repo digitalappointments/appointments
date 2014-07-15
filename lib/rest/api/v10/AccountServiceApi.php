@@ -1,7 +1,17 @@
 <?php
+include_once("lib/model/account/AccountServices.php");
 
 class AccountServiceApi extends ServiceApi
 {
+    const DefaultMaxRows = 20;
+
+    public static $default_order_by = array(
+        "name", "id"
+    );
+    public static $default_order_direction = array(
+        "ASC", "ASC"
+    );
+
     public function registerApiRest()
     {
         $api = array(
@@ -48,41 +58,39 @@ class AccountServiceApi extends ServiceApi
      */
     public function listAccounts(ServiceBase $api, $params)
     {
-        $dbm = DBManagerFactory::getDatabaseManager();
-        $dbm->connect();
-
-        $limit = 500;
-        $orderBy = "api_user";
-        $dir = "ASC";
-
-        if (!empty($params['limit'])) {
-            $limit = $params['limit'];
-        }
-        if (!empty($params['order'])) {
-            $orderBy = $params['order'];
-        }
-        if (!empty($params['dir'])) {
-            $dir = $params['dir'];
-        }
-
-        $rows = array();
-
-        try {
-            $sql  = "SELECT * FROM client";
-            $sql .= " ORDER by $orderBy $dir LIMIT $limit";
-            $result = $dbm->query($sql);
-            if ($result) {
-                while ($row = $dbm->fetchAssoc($result)) {
-                    $rows[] = $row;
-                }
-                $dbm->freeQueryResult($result);
+        if (empty($params['order_by'])) {
+            $orderBy  = static::$default_order_by;
+            $orderDir = static::$default_order_direction;
+        } else {
+            $orderBy = explode(",", $params['order_by']);
+            if (empty($params['order_dir'])) {
+                $orderDir = array();
+            } else {
+                $orderDir = explode(",", $params['order_dir']);
             }
-
-            Log::info("Account Service: customer={$this->customer_id}  list Accounts");
-
-        } catch (Exception $e) {
-            Log::error($e->getMessage()); // Do Not Return - Must Release Locks
         }
+        if (empty($params['max_num'])) {
+            $maxNum = static::DefaultMaxRows;
+        } else {
+            $maxNum = intval($params['max_num']);
+        }
+
+        $filterOptions = array(
+            "order_by"  => $orderBy,
+            "order_dir" => $orderDir,
+            "max_num" => $maxNum,
+        );
+
+        if (!empty($params['fields'])) {
+            $fieldFilter  = explode(",", $params['fields']);
+            if (count($fieldFilter) > 0) {
+                $filterOptions['fields'] = $fieldFilter;
+            }
+        }
+
+        $accountServices = new AccountServices();
+        $rows = $accountServices->filter($filterOptions);
+        //printf("ROWS = %d\n",count($rows));
 
         return $rows;
     }
