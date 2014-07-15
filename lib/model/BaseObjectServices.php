@@ -1,127 +1,56 @@
 <?php
-/**
- * @package    Publisher
- * @subpackage Service
- * @version    $Id: Service.php 1307 2007-12-10 15:02:43Z mfrench $
- */
 
-/**
- * @package    Publisher
- * @subpackage Service
- */
 abstract class BaseObjectServices
 {
-    /**
-     * @var int
-     */
-    const Success = 200;
+    const DEFAULT_ROWS_PER_REQUEST = 100;
+    public $className;
 
-    /**
-     * @var int
-     */
-    const InvalidParam = 400;
-
-    /**
-     * @var int
-     */
-    const Unauthorized = 401;
-
-    /**
-     * @var int
-     */
-    const NoResult = 404;
-
-    /**
-     * @var int
-     */
-    const Error = 500;
-
-    /**
-     * Array of Service objects being instantiated.  Useful for unit-testing.
-     *
-     * @ignore
-     * @var array
-     */
-    private static $aServiceInstances = array();
-
-    /**
-     * @ignore
-     */
-    public function __construct()
+    public function filter($options=array())
     {
-    }
+        $baseObject = new $this->className();
 
+        $rows = array();
+        $order_by  = empty($options['order_by']) ? false : $options['order_by'];
+        $order_dir = empty($options['order_dir']) ? "ASC" : $options['order_dir'];
+        $last_id  = empty($options['last_id']) ? '0' : $options['last_id'];
+        $max_rows = empty($options['max_num']) ? self::DEFAULT_ROWS_PER_REQUEST : (int) $options['max_num'];
 
-    //////////////////////////////////////////////////////////////////////////
-    // Pseudo Protected methods /////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Retrieves the service by the specified name.
-     *
-     * @ignore
-     * @param String $sServiceName
-     * @return Service
-     */
-    public static function _getService($sServiceName)
-    {
-        if (!(isset(self::$aServiceInstances[$sServiceName]))) {
-            $sServiceClass = "{$sServiceName}Service";
-            $oService = new $sServiceClass();
-            if (!($oService instanceof Service)) {
-                throw new Exception("'{$sServiceName}Service' is not an instance of 'Service'");
+        $stmt = false;
+        try {
+            $fieldKeys = array_keys($baseObject->fields);
+            $select_fields = D::$dbm->getSelectSet($fieldKeys);
+            $sql  = "SELECT {$select_fields} FROM {$baseObject->tableName}";
+            $bindTemplate = '';
+            $bindParams = array();
+            if (!empty($order_by)) {
+                $sql .= " ORDER BY {$order_by} {$order_dir}";
+                //$bindTemplate .= 'ss';
+                //$bindParams[] = $order_by;
+                //$bindParams[] = $order_dir;
             }
-            self::_setService($sServiceName, $oService);
-        }
+            $sql .= " LIMIT ?";
+            $bindTemplate .= 'i';
+            $bindParams[] = $max_rows;
 
-        return self::$aServiceInstances[$sServiceName];
-    }
+            $stmt = D::$dbm->prepare($sql);
 
-    /**
-     * Empties out the registered services.
-     *
-     * @ignore
-     */
-    public static function _resetServices()
-    {
-        self::$aServiceInstances = array();
-    }
-
-    /**
-     * Specifies a new service object for the service with the specified name.
-     *
-     * @ignore
-     * @param String $sServiceName
-     * @param Service $oService
-     * @return Service
-     */
-    public static function _setService($sServiceName, Service $oService)
-    {
-        $sClassName = "{$sServiceName}Service";
-        if (!($oService instanceof $sClassName)) {
-            throw new Exception("Supplied service name '{$sClassName}' does not match supplied service instance type '".get_class($oService)."'");
-        }
-        self::$aServiceInstances[$sServiceName] = $oService;
-    }
-
-    //////////////////////////////////////////////////////////////////////////
-    // Protected methods ////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Logs some debugging info. Takes as many params as you want, print_r's them before logging.
-     */
-    protected function debug()
-    {
-        $aArgs = func_get_args();
-        $sOut = "";
-        foreach ($aArgs as $sMsg) {
-            if (is_string($sMsg)) {
-                $sOut .= $sMsg;
-            } else {
-                $sOut .= print_r($sMsg, true);
+            D::$dbm->bindParameters($stmt, $bindTemplate, $bindParams);
+            D::$dbm->execute($stmt);
+            while($row = D::$dbm->fetchResult($stmt, $fieldKeys)) {
+                $rows[] = new $this->className($row);
             }
+            D::$dbm->closeStatement($stmt);
+        } catch (DatabaseException $e) {
+            if ($stmt !== false) {
+                D::$dbm->closeStatement($stmt);
+            }
+            Log::error($e->getLogMessage());
+        } catch (Exception $e) {
+            if ($stmt !== false) {
+                D::$dbm->closeStatement($stmt);
+            }
+            Log::error($e->getMessage());
         }
-        LOG::$l->debug(get_class($this) . ": {$sOut}\n");
+        return $rows;
     }
 }
