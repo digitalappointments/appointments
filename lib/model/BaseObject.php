@@ -26,10 +26,14 @@ abstract class BaseObject
 
     public function __construct($values = array())
     {
-        if(!is_string($this->tableName)  || empty($this->tableName) ||
-            /* !is_array($this->fieldNames) || empty($this->fieldNames) || */
-            !is_array($this->fields)     || empty($this->fields)) {
-            throw new ServiceException(get_class($this) . " is missing Table or Field Definitions.");
+        if (empty($this->tableName) || !is_string($this->tableName)) {
+            throw new ServiceException(get_class($this) . " is missing Table Definition.");
+        }
+        if (empty($this->fields) && !empty(Model::$definitions[$this->tableName])) {
+            $this->fields = Model::$definitions[$this->tableName];
+        }
+        if (empty($this->fields) || !is_array($this->fields)) {
+            throw new ServiceException(get_class($this) . " is missing Field Definition.");
         }
 
         if (!is_array($values)) {

@@ -162,10 +162,10 @@ class RestResponse extends Zend_Http_Response
     {
         switch($this->type) {
             case self::JSON:
-                $response = json_encode($this->body, JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_TAG|JSON_HEX_AMP);
+                $response = json_encode($this->body, JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_TAG|JSON_HEX_AMP) . "\n";
                 break;
             case self::JSON_HTML:
-                $response = htmlspecialchars(json_encode($this->body), ENT_QUOTES, "UTF-8");
+                $response = htmlspecialchars(json_encode($this->body), ENT_QUOTES, "UTF-8") . "\n";
                 break;
             case self::FILE:
                 // special case
