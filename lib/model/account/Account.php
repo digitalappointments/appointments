@@ -23,9 +23,11 @@ class Account extends BaseObject
         'dateModified' => array(
             'type' => 'datetime',
             'write_reset' => true,
+            'api'  => true,
         ),
         'deleted' => array(
             'type' => 'int',
+            'api'  => true,
         ),
         'industry' => array(
             'type' => 'varchar',
@@ -50,12 +52,12 @@ class Account extends BaseObject
         'addressPostalcode' => array(
             'type' => 'varchar',
             'len'  => 20,
-            'api'  => false,
+            'api'  => true,
         ),
         'addressCountry' => array(
             'type' => 'varchar',
             'len'  => 150,
-            'api'  => false,
+            'api'  => true,
         ),
         'officePhone' => array(
             'type' => 'varchar',
@@ -65,6 +67,7 @@ class Account extends BaseObject
         'altPhone' => array(
             'type' => 'varchar',
             'len'  => 100,
+            'api'  => true,
         ),
         'website' => array(
             'type' => 'varchar',
@@ -77,7 +80,7 @@ class Account extends BaseObject
         ),
         'trial' => array(
             'type' => 'int',
-            'api'  => false,
+            'api'  => true,
         ),
     );
 
