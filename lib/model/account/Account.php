@@ -2,5 +2,5 @@
 
 class Account extends BaseObject
 {
-    public $tableName = 'account';
+    public $tableName = 'accounts';
 }

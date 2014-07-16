@@ -7,6 +7,24 @@ class HttpClient
     const POST = 'POST';
     const PUT = 'PUT';
 
+    public static $URL_PREFIX = '';
+    public static $_headers = array();
+
+    public static function setHeaders(array $headers)
+    {
+        static::$_headers = $headers;
+    }
+
+    public static function addHeaders(array $headers)
+    {
+        static::$_headers = array_merge(static::$_headers, $headers);
+    }
+
+    public static function addHeader($hKey, $hValue)
+    {
+        static::$_headers[$hKey] = $hValue;
+    }
+
     /**
      * This method uses Curl to invoke An External Service
      * @param $method
@@ -17,7 +35,17 @@ class HttpClient
     public function callResource($method, $url, $data = null)
     {
         $handle = curl_init();
+        $url = static::$URL_PREFIX . $url;
+
         $headers = array();
+        foreach(static::$_headers AS $hKey => $hValue) {
+            $hdr = "{$hKey}:";
+            if (!empty($hValue)) {
+                $hdr .= " {$hValue}";
+            }
+            $headers[] = $hdr;
+        }
+
         $headers[] = 'Expect:';
         $headers[] = 'Accept: application/json';
 

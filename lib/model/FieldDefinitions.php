@@ -1,7 +1,7 @@
 <?php
 
 //------ Table: account ------
-Model::$definitions['account'] = array(
+Model::$definitions['accounts'] = array(
     'id' => array(
         'type' => 'guid',
         'key' => true,
@@ -85,7 +85,7 @@ Model::$definitions['account'] = array(
 
 
 //------ Table: user ------
-Model::$definitions['user'] = array(
+Model::$definitions['users'] = array(
     'id' => array(
         'type' => 'guid',
         'key' => true,

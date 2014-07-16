@@ -137,11 +137,13 @@ abstract class BaseObject
                 D::$dbm->closeStatement($stmt);
             }
             Log::error($e->getLogMessage());
+            throw $e;
         } catch (Exception $e) {
             if ($stmt !== false) {
                 D::$dbm->closeStatement($stmt);
             }
             Log::error($e->getMessage());
+            throw $e;
         }
     }
 
@@ -294,6 +296,8 @@ abstract class BaseObject
         } catch (Exception $e) {
             if ($e->getCode() == DBManager::MYSQL_CODE_DUPLICATE_KEY) {
                 $result = ($this->update($options) > 0) ? true : false;
+            } else {
+                throw $e;
             }
         }
         return $result;

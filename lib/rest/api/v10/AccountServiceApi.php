@@ -17,13 +17,13 @@ class AccountServiceApi extends ServiceApi
         $api = array(
             'getAccountStatus' => array(
                 'reqType' => 'GET',
-                'path' => array('account','status'),
+                'path' => array('accounts','status'),
                 'pathVars' => array(),
                 'method' => 'getAccountStatus',
             ),
             'listAccounts' => array(
                 'reqType' => 'GET',
-                'path' => array('account'),
+                'path' => array('accounts'),
                 'pathVars' => array(),
                 'method' => 'listAccounts',
             ),
