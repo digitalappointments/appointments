@@ -6,4 +6,3 @@ class AccountServices extends BaseObjectServices
 {
     public $className = "Account";
 }
-

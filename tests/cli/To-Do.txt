@@ -1,0 +1,14 @@
+
+1)  REST:  Capture Any/All Rest Exceptions - Generate Exception Responses  
+2)  REST:  Means to provide User Credentials on Headers  -  HttpClient
+3)  REST:  Means to programmaticaly configure/switch  HTTP Domain "Root" REST URL
+
+
+4)  REST:  Get,Post,Put,Delete  accounts
+
+5)  REST:  Get,Post,Put,Delete  users   (all implemeted for accounts should be Core Function)
+
+6)  FIX the Services Redundancy:
+            BaseObjectSevices => ModelSupport  or  ModelServices  or  Model Helpers
+   
+         

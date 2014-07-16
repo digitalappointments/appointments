@@ -86,11 +86,13 @@ abstract class BaseObjectServices
                 D::$dbm->closeStatement($stmt);
             }
             Log::error($e->getLogMessage());
+            throw $e;
         } catch (Exception $e) {
             if ($stmt !== false) {
                 D::$dbm->closeStatement($stmt);
             }
             Log::error($e->getMessage());
+            throw $e;
         }
         return $rows;
     }

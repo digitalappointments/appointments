@@ -94,7 +94,7 @@ class Test extends BaseObject
 
     protected $api_fields;
     protected $database_columns;
-    protected $tableName = 'account';
+    protected $tableName = 'accounts';
 
     /**
      *

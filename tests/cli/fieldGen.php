@@ -115,8 +115,9 @@ var_export($fields);
 //
 //class Model {
 //    public static $tables = array(
-//        'account',
-//        'client',
+//        'accounts',
+//        'clients',
+//        'users',
 //    );
 //    public static $definitions;
 //}
