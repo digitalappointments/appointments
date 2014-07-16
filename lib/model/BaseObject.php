@@ -38,7 +38,7 @@ abstract class BaseObject
 
         $this->api_fields = array();
         $this->primaryKeys = array();
-        foreach($this->fields As $fieldName => $fieldInfo) {
+        foreach($this->fields AS $fieldName => $fieldInfo) {
             if (!empty($fieldInfo['api'])) {
                 $this->api_fields[] = $fieldName;
             }
@@ -369,11 +369,21 @@ abstract class BaseObject
      *
      * @return array
      */
-    public function toApi()
+    public function toApi($fieldSet=array())
     {
         $apiFields = array();
-        foreach ($this->api_fields as $fieldName) {
-            $apiFields[$fieldName] = $this->fieldName;
+        if (count($fieldSet > 0)) {
+            // Specified Field Set (that are also API
+            foreach ($fieldSet as $fieldName) {
+                if (!empty($this->fields[$fieldName]['api'])) {
+                    $apiFields[$fieldName] = $this->$fieldName;
+                }
+            }
+        } else {
+            // All API Fields
+            foreach ($this->api_fields as $fieldName) {
+                $apiFields[$fieldName] = $this->$fieldName;
+            }
         }
         return $apiFields;
     }
