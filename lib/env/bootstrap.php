@@ -11,6 +11,8 @@ require_once("lib/include/BaseController.php");
 require_once("lib/utils/SystemClassLoader.php");
 require_once("lib/exception/ServiceException.php");
 require_once("lib/database/DBManagerFactory.php");
+require_once("lib/model/Model.php");
+include_once('lib/model/FieldDefinitions.php');
 require_once("lib/model/BaseObject.php");
 require_once("lib/model/BaseObjectServices.php");
 
