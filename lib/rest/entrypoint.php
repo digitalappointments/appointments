@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__)."/../../env/bootstrap.php");
+require_once(dirname(__FILE__)."/../env/bootstrap.php");
 define('ENTRY_POINT_TYPE', 'api');
 
 require_once("lib/rest/RestService.php");
