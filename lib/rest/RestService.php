@@ -663,7 +663,7 @@ class RestService extends ServiceBase
                         }
                         $match = true;
                         for ($i = 0; $i < count($path) && ($match); $i++) {
-                            if (!($path[$i] === "?" || $path[$i] === $pathData[$i])) {
+                            if (!($path[$i] === "?" || $path[$i] === "<resource>" || $path[$i] === $pathData[$i])) {
                                 $match = false;
                                 break;
                             }
