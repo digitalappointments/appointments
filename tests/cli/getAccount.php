@@ -1,14 +1,36 @@
 <?php
-// $current_user = '1';
-include_once("sugar_api.php");
-$GLOBALS['config']['apiUrl'] = 'http://localhost:8888/Mango/toffee/ent/sugarcrm/rest/v10';
+require_once(dirname(__FILE__) . "/../../lib/env/bootstrap.php");
+define('ENTRY_POINT_TYPE', 'test');
 
-$response = callResource("/Leads/51960a74-f3a8-16e5-177e-52716e102f58", 'GET', null);
+//----------------------------------------------------------------------------
+require_once("lib/http/HttpClient.php");
+HttpClient::addHeader("API_USER", md5("tjwolf"));
 
-$code = $response["code"];
-printf("\nHTTP Status Code: $code\n");
-if ($code == 200) {
-    print_r($response['data']);
-} else {
-	print_r($response["response_headers"]);
+HttpClient::$URL_PREFIX = 'http://localhost:8888/appointments/rest/v10';
+// HttpClient::$URL_PREFIX = 'http://handlemyappointments.net/appointments/rest/v10';
+//----------------------------------------------------------------------------
+
+
+$fields = array(
+    "name", "dateModified", "addressCity"
+);
+$fieldSelector      = "fields="    . implode(",", $fields);
+
+$args = array(
+    $fieldSelector,
+);
+
+$qs = "?" . implode("&", $args);
+// echo $qs . "\n";
+
+$url = "/accounts/1e092baf-d07f-eb65-101c-53c4c20bd795" . $qs;
+
+printf("\n\n------ GET Account ---------------\n");
+$restClient = new HttpClient();
+$result = $restClient->callResource('GET', $url, $data);
+if ($result['code'] != '200') {
+    print_r($result);
+    echo "\n";
+    exit;
 }
+print_r($result['data']);

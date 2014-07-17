@@ -25,7 +25,7 @@ class RestEndpoints
 
     protected static $map = array(
         "v10" => array(
-            "*:accounts" => "AccountServiceApi",
+            "*:accounts" => "AccountsApi",
             "*:email" => "MailServiceApi",
             "*:imagestore" => "ImageStoreServiceApi",
             "*:imagecapture" => "ImageCaptureServiceApi",
