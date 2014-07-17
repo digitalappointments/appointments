@@ -177,7 +177,7 @@ Model::$definitions['users'] = array(
         'len' => 20,
         'api' => true,
     ),
-    'address_country' => array(
+    'addressCountry' => array(
         'type' => 'varchar',
         'len' => 150,
         'api' => true,

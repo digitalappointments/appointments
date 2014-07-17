@@ -28,6 +28,7 @@ abstract class BaseObjectServices
             }
         }
 
+        $deleted = (!empty($options['deleted']));  // default: false - do not include deleted
         $max_rows = empty($options['max_num']) ? self::DEFAULT_ROWS_PER_REQUEST : (int) $options['max_num'];
 
         $stmt = false;
@@ -44,6 +45,9 @@ abstract class BaseObjectServices
             }
             $select_fields = D::$dbm->getSelectSet($fieldKeys);
             $sql  = "SELECT {$select_fields} FROM {$baseObject->tableName}";
+            if (!$deleted) {
+                $sql .= " WHERE deleted = 0";
+            }
             $bindTemplate = '';
             $bindParams = array();
             $sqlOrderBy = '';

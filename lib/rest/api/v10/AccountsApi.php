@@ -3,14 +3,7 @@ include_once("lib/model/account/AccountServices.php");
 
 class AccountsApi extends ServiceApi
 {
-    const DefaultMaxRows = 20;
-
-    public static $default_order_by = array(
-        "name", "id"
-    );
-    public static $default_order_direction = array(
-        "ASC", "ASC"
-    );
+    public $RESOURCE_NAME = 'Account';
 
     public function registerApiRest()
     {
