@@ -55,12 +55,7 @@ abstract class BaseObject
 
         $this->initialize();
 
-        foreach ($values as $fieldName => $value) {  // An Array of Values Passed in Will OverWrite Any Initialization Values
-            if (!isset($this->fields[$fieldName])) {
-                throw new ServiceException("No such field name {$fieldName} on " . get_class($this));
-            }
-            $this->$fieldName = $value;
-        }
+        $this->applyValues($values);
     }
 
     /**
@@ -208,28 +203,30 @@ abstract class BaseObject
      */
     public function update($options=array())
     {
+        $updateFields = array();
+        $tm = time();
+
         if (!empty($options['fieldset'])) {  // If no empty, fieldset is an array of ields to be updated (as opposed to All Fields)
-            $updateFields = array();
-            $tm = time();
             $farray = $options['fieldset'];
             if (!is_array($farray) || count($farray) == 0) {
                 throw new ServiceException(get_class($this) . " - update: fieldset option invalid");
             }
-            foreach($farray AS $fieldName) {
-                if (!isset($this->fields[$fieldName])) {
-                    throw new ServiceException(get_class($this) . " - update: fieldset option specifies invalid field : {$fieldName}");
-                }
-                if (!empty($this->fields[$fieldName]['write_reset'])) {
-                    $type = $this->fields[$fieldName]['type'];
-                    if ($this->field_types[$type] === '*') { // Compute Type with Write_reset option - Re-Compute on Write
-                        $val = $this->_compute($fieldName, $type, $tm);
-                        $this->$fieldName = $val;
-                    }
-                }
-                $updateFields[$fieldName] = $this->$fieldName;
-            }
         } else {
-            $updateFields = $this->toArray();
+            $farray = array_keys($this->fields);
+        }
+
+        foreach($farray AS $fieldName) {
+            if (!isset($this->fields[$fieldName])) {
+                throw new ServiceException(get_class($this) . " - update: fieldset option specifies invalid field : {$fieldName}");
+            }
+            if (!empty($this->fields[$fieldName]['write_reset'])) {
+                $type = $this->fields[$fieldName]['type'];
+                if ($this->field_types[$type] === '*') { // Compute Type with Write_reset option - Re-Compute on Write
+                    $val = $this->_compute($fieldName, $type, $tm);
+                    $this->$fieldName = $val;
+                }
+            }
+            $updateFields[$fieldName] = $this->$fieldName;  // Collect Values
         }
 
         if (!empty($this->auto_increment_key_field)) {       // Remove AutoIncrement Key Fields from Update Field Set
@@ -348,6 +345,21 @@ abstract class BaseObject
         return $affectedRows;
     }
 
+    public function markDeleted()
+    {
+        $this->deleted = true;
+    }
+
+    public function applyValues($values = array())
+    {
+        foreach ($values as $fieldName => $value) {
+            if (!isset($this->fields[$fieldName])) {
+                throw new ServiceException("No such field name {$fieldName} on " . get_class($this));
+            }
+            $this->$fieldName = $value;
+        }
+    }
+
     /**
      * This method returns the value of the PrimaryKey
      *
@@ -380,7 +392,7 @@ abstract class BaseObject
     public function toApi($fieldSet=array())
     {
         $apiFields = array();
-        if (count($fieldSet > 0)) {
+        if (count($fieldSet) > 0) {
             // Specified Field Set (that are also API
             foreach ($fieldSet as $fieldName) {
                 if (!empty($this->fields[$fieldName]['api'])) {

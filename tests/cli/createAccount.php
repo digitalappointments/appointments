@@ -1,31 +1,63 @@
 <?php
-// $current_user = '1';
-include_once("sugar_api.php");
+require_once(dirname(__FILE__) . "/../../lib/env/bootstrap.php");
+define('ENTRY_POINT_TYPE', 'test');
 
-$GLOBALS['config']['apiUrl'] = 'http://localhost:8888/Mango/toffee/ent/sugarcrm/rest/v10';
-$GLOBALS['config']['username'] = 'sally';
-$GLOBALS['config']['password'] = 'sally';
+//----------------------------------------------------------------------------
+require_once("lib/http/HttpClient.php");
+HttpClient::addHeader("API_USER", md5("tjwolf"));
 
-$jsondata =<<<eod
-{"deleted":"0","do_not_call":"0","converted":"0","preferred_language":"en_us","assigned_user_id":"seed_sally_id","team_name":[{"id":1,"display_name":"Global","name":"Global","name_2":"","primary":true}],"last_name":"Qwerty","full_name":"Qwerty"}
-eod;
+HttpClient::$URL_PREFIX = 'http://localhost:8888/appointments/rest/v10';
+// HttpClient::$URL_PREFIX = 'http://handlemyappointments.net/appointments/rest/v10';
+//----------------------------------------------------------------------------
 
-$data = json_decode($jsondata,true);
-print_r($data);
 
-//echo "..sleeping\n";
-//sleep(5);
+//
+////~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  CREATE FROM ~~~~~~~~~~~~
+//$url = "/accounts/32749ec7-1361-5bf8-2fc1-53c4c2e524f2";
+//$restClient = new HttpClient();
+//$result = $restClient->callResource('GET', $url, $data);
+//if ($result['code'] != '200') {
+//    print_r($result);
+//    echo "\n";
+//    exit;
+//}
+//// print_r($result['data']);
+////~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  CREATE FROM ~~~~~~~~~~~~
+//
+//$data = $result['data'];
+//unset($data['id']);
+//
+//var_export($data);
+//exit;
+//
 
-// $response = callResource("/Contacts/link/leads?viewed=1", 'POST', $data);
-$response = callResource("/Leads?viewed=1", 'POST', $data);
+$data = array (
+    'name' => 'Mary Had A little Lamb',
+    'dateEntered' => '2014-08-24 16:15:00',
+    'dateModified' => '2014-08-25 10:15:00',
+    'deleted' => 0,
+    'industry' => '',
+    'addressStreet' => '',
+    'addressCity' => 'Madison',
+    'addressState' => 'Wisconsin',
+    'addressPostalcode' => '53511',
+    'addressCountry' => '',
+    'officePhone' => '',
+    'altPhone' => '',
+    'website' => '',
+    'active' => 0,
+    'trial' => 0,
+);
 
-//  print_r($response);
 
-$code = $response["code"];
-printf("HTTP Status Code: $code\n");
-if ($code == 200) {
-	print_r($response["data"]);
-} else {
-	print_r($response["response_headers"]);
+$url = "/accounts/";
+
+printf("\n\n------ CREATE Account ---------------\n");
+$restClient = new HttpClient();
+$result = $restClient->callResource('POST', $url, $data);
+if ($result['code'] != '200') {
+    print_r($result);
+    echo "\n";
+    exit;
 }
-?>
+print_r($result['data']);

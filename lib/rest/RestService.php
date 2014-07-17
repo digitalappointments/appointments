@@ -12,6 +12,7 @@ require_once('lib/rest/RestRequest.php');
 require_once('lib/authentication/AuthenticationManager.php');
 
 require_once("lib/rest/RestClient.php");
+require_once("lib/exception/ServiceApiException.php");
 
     /** @noinspection PhpInconsistentReturnPointsInspection */
 class RestService extends ServiceBase

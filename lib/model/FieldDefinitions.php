@@ -20,6 +20,7 @@ Model::$definitions['accounts'] = array(
     'dateModified' => array(
         'type' => 'datetime',
         'api' => true,
+        'write_reset' => true,
     ),
     'deleted' => array(
         'type' => 'int',
@@ -109,6 +110,7 @@ Model::$definitions['users'] = array(
     'dateModified' => array(
         'type' => 'datetime',
         'api' => true,
+        'write_reset' => true,
     ),
     'deleted' => array(
         'type' => 'int',

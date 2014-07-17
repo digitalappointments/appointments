@@ -1,17 +1,23 @@
 <?php
-include_once("sugar_api.php");
-$GLOBALS['config']['apiUrl'] = 'http://localhost:8888/Mango/toffee/ent/sugarcrm/rest/v10';
- 
-// http://localhost:8888/Mango/toffee/ent/sugarcrm/rest/v10/EmailCommunications/4c6f978f-ad6e-876f-328d-535c3a227b77
-$response = callResource("/EmailCommunications/4c6f978f-ad6e-876f-328d-535c3a227b77", 'DELETE');
+require_once(dirname(__FILE__) . "/../../lib/env/bootstrap.php");
+define('ENTRY_POINT_TYPE', 'test');
 
-print_r($response);
+//----------------------------------------------------------------------------
+require_once("lib/http/HttpClient.php");
+HttpClient::addHeader("API_USER", md5("tjwolf"));
 
-$code = $response["code"];
-printf("HTTP Status Code: $code\n");
-if ($code == 200) {
-	print_r($response["data"]);
-} else {
-	print_r($response["response_headers"]);
+HttpClient::$URL_PREFIX = 'http://localhost:8888/appointments/rest/v10';
+// HttpClient::$URL_PREFIX = 'http://handlemyappointments.net/appointments/rest/v10';
+//----------------------------------------------------------------------------
+
+$url = "/accounts/1e092baf-d07f-eb65-101c-53c4c20bd795";
+
+printf("\n\n------ DELETE Account ---------------\n");
+$restClient = new HttpClient();
+$result = $restClient->callResource('DELETE', $url, $data);
+if ($result['code'] != '200') {
+    print_r($result);
+    echo "\n";
+    exit;
 }
-?>
+print_r($result['data']);

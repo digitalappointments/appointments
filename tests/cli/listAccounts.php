@@ -35,10 +35,10 @@ $args = array(
     $maxNum
 );
 
-$qs = implode("&", $args);
+$qs = "?" . implode("&", $args);
 // echo $qs . "\n";
 
-$url = "/accounts?" . $qs;
+$url = "/accounts" . $qs;
 
 printf("\n\n------ LIST Accounts ---------------\n");
 $restClient = new HttpClient();
