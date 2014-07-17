@@ -108,9 +108,11 @@ class AccountsApi extends ServiceApi
             $fieldKeys  = explode(",", $params['fields']);
         }
 
+        $options['deleted'] = true; // include deleted
+
         $id = $params['id'];
         $account = new Account();
-        $success = $account->retrieve($id);
+        $success = $account->retrieve($id,$options);
         if (!$success) {
             throw new ServiceApiExceptionNotFound("Account Not Found");
         }
