@@ -2,7 +2,15 @@
 require_once(dirname(__FILE__) . "/../../lib/env/bootstrap.php");
 define('ENTRY_POINT_TYPE', 'test');
 
+if ($argc > 1) {
+    $id = $argv[1];
+} else {
+    printf("Required Argument: id\n\n");
+    exit;
+}
+
 include_once('tests/cli/HttpConfig.php');
+
 //----------------------------------------------------------------------------
 //require_once("lib/http/HttpClient.php");
 //HttpClient::addHeader("API_USER", md5("tjwolf"));
@@ -12,15 +20,24 @@ include_once('tests/cli/HttpConfig.php');
 //----------------------------------------------------------------------------
 
 $data = array (
-    'firstName' => 'Sandy',
-    'addressStreet' => '1823 Henderson Ave',
-    'addressCity' => 'Milwaukee',
+    'firstName' => 'Santa',
+    'addressStreet' => '123 Maple Street',
+    'addressCity' => 'Milwafukee',
 );
 
+$options            = "__deleted=true";   // all must be double_underscored variables
 
-$url = "/users/c6700dfc-623f-6efc-c12c-53c7468bc8f7";
+$args = array(
+    // $options,
+);
+
+$url = "/users/{$id}";
+if (!empty($args)) {
+    $url .= "?" . implode("&", $args);
+}
 
 printf("\n\n------ UPDATE User ---------------\n");
+printf("URL: %s\n",$url);
 $restClient = new HttpClient();
 $result = $restClient->callResource('PUT', $url, $data);
 if ($result['code'] != '200') {

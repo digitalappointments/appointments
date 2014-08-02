@@ -14,33 +14,33 @@ class AccountsApi extends ServiceApi
                 'pathVars' => array(),
                 'method' => 'listAccounts',
             ),
-            'createAccount' => array(
-                'reqType' => 'POST',
-                'path'      => array('accounts'),
-                'pathVars'  => array(),
-                'method' => 'createAccount',
-            ),
+//            'createAccount' => array(
+//                'reqType' => 'POST',
+//                'path'      => array('accounts'),
+//                'pathVars'  => array(),
+//                'method' => 'createAccount',
+//            ),
             'getAccount' => array(
                 'reqType' => 'GET',
                 'path'      => array('accounts', '?'),
                 'pathVars'  => array('', 'id'),
                 'method' => 'getAccount',
             ),
-            'updateAccount' => array(
-                'reqType' => 'PUT',
-                'path'      => array('accounts', '?'),
-                'pathVars'  => array('', 'id'),
-                'method' => 'updateAccount',
-            ),
-            'deleteAccount' => array(
-                'reqType' => 'DELETE',
-                'path'      => array('accounts', '?'),
-                'pathVars'  => array('', 'id'),
-                'method' => 'deleteAccount',
-            ),
+//            'updateAccount' => array(
+//                'reqType' => 'PUT',
+//                'path'      => array('accounts', '?'),
+//                'pathVars'  => array('', 'id'),
+//                'method' => 'updateAccount',
+//            ),
+//            'deleteAccount' => array(
+//                'reqType' => 'DELETE',
+//                'path'      => array('accounts', '?'),
+//                'pathVars'  => array('', 'id'),
+//                'method' => 'deleteAccount',
+//            ),
         );
 
-        return $api;
+        return array_merge($api, parent::registerApiRest());
     }
 
     /**
@@ -49,42 +49,18 @@ class AccountsApi extends ServiceApi
      * @param ServiceBase $api
      * @return array
      */
-    public function listAccounts(ServiceBase $api, $params)
+    public function listAccounts(ServiceBase $api, $params, $options=array())
     {
-        if (empty($params['order_by'])) {
-            $orderBy  = static::$default_order_by;
-            $orderDir = static::$default_order_direction;
-        } else {
-            $orderBy = explode(",", $params['order_by']);
-            if (empty($params['order_dir'])) {
-                $orderDir = array();
-            } else {
-                $orderDir = explode(",", $params['order_dir']);
-            }
-        }
-        if (empty($params['max_num'])) {
-            $maxNum = static::DefaultMaxRows;
-        } else {
-            $maxNum = intval($params['max_num']);
-        }
+        /* Add/Remove/Update any params */
 
-        $filterOptions = array(
-            "order_by"  => $orderBy,
-            "order_dir" => $orderDir,
-            "max_num" => $maxNum,
+        $rows = parent::listResources($api, $params, $options);
+
+        /* Modify Result */
+
+        $rows[] = array(
+            'name' => 'Green Bay Packers',
+            'description' => 'I have been added - Not really an Account Record',
         );
-
-        if (!empty($params['fields'])) {
-            $fieldFilter  = explode(",", $params['fields']);
-            if (count($fieldFilter) > 0) {
-                $filterOptions['fields'] = $fieldFilter;
-            }
-        }
-
-        $accountServices = new AccountServices();
-        $rows = $accountServices->filter($filterOptions);
-        //printf("ROWS = %d\n",count($rows));
-
         return $rows;
     }
 
@@ -94,94 +70,15 @@ class AccountsApi extends ServiceApi
      * @param ServiceBase $api
      * @return array
      */
-    public function getAccount(ServiceBase $api, $params)
+    public function getAccount(ServiceBase $api, $params, $options=array())
     {
-        $options = array();
-        if (!empty($params['fields'])) {
-            $fieldKeys  = explode(",", $params['fields']);
-        }
+        /* Add/Remove/Update any params */
 
-        $options['deleted'] = true; // include deleted
+        $row = parent::getResource($api, $params, $options);
 
-        $id = $params['id'];
-        $account = new Account();
-        $success = $account->retrieve($id,$options);
-        if (!$success) {
-            throw new ServiceApiExceptionNotFound("Account Not Found");
-        }
-        $row = $account->toApi($fieldKeys);
+        /* Modify Result */
 
         return $row;
     }
 
-    /**
-     * Update Account
-     *
-     * @param ServiceBase $api
-     * @return array
-     */
-    public function createAccount(ServiceBase $api, $params)
-    {
-        unset($params['id']);
-        unset($params['deleted']);
-        unset($params['dateEntered']);
-        unset($params['dateModified']);
-
-        $account = new Account($params);
-        $account->insert();
-        // $account->delete();
-
-        $row = $account->toApi();
-        return $row;
-    }
-
-    /**
-     * Update Account
-     *
-     * @param ServiceBase $api
-     * @return array
-     */
-    public function updateAccount(ServiceBase $api, $params)
-    {
-        $id = $params['id'];
-        $account = new Account();
-
-        unset($params['id']);
-        unset($params['deleted']);
-        unset($params['dateEntered']);
-        unset($params['dateModified']);
-
-        $success = $account->retrieve($id);
-        if (!$success) {
-            throw new ServiceApiExceptionNotFound("Account Not Found");
-        }
-        $account->applyValues($params);
-        $account->update();
-
-        $row = $account->toApi();
-        return $row;
-    }
-
-    /**
-     * Delete Account
-     *
-     * @param ServiceBase $api
-     * @return array
-     */
-    public function deleteAccount(ServiceBase $api, $params)
-    {
-        $id = $params['id'];
-        $account = new Account();
-        $success = $account->retrieve($id);
-        if (!$success) {
-            throw new ServiceApiExceptionNotFound("Account Not Found");
-        }
-
-        $account->markDeleted();
-        $account->update();
-        // $account->delete();
-
-        $row = $account->toApi();
-        return $row;
-    }
 }

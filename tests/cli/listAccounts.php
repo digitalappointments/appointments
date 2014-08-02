@@ -13,7 +13,7 @@ include_once('tests/cli/HttpConfig.php');
 
 
 $fields = array(
-    "name", "dateModified", "addressCity"
+    "id", "name", "dateModified", "addressCity"
 );
 $fieldOrder = array(
     "name", "id",
@@ -25,7 +25,8 @@ $fieldDir = array(
 $fieldSelector      = "fields="    . implode(",", $fields);
 $fieldOrderSelector = "order_by="  . implode(",", $fieldOrder);
 $fieldDirSelector   = "order_dir=" . implode(",", $fieldDir);
-$maxNum             = "max_num=3";
+$maxNum             = "max_num=100";
+$options            = "__deleted=true";   // all must be double_underscored variables
 
 //    order_by=id,name&order_dir=DESC&max_num=2&fields=name,dateModified,addressCity'
 
@@ -33,15 +34,17 @@ $args = array(
     $fieldSelector,
     $fieldOrderSelector,
     $fieldDirSelector,
-    $maxNum
+    $maxNum,
+    // $options,
 );
 
-$qs = "?" . implode("&", $args);
-// echo $qs . "\n";
-
-$url = "/accounts" . $qs;
+$url = "/accounts";
+if (!empty($args)) {
+    $url .= "?" . implode("&", $args);
+}
 
 printf("\n\n------ LIST Accounts ---------------\n");
+printf("URL: %s\n",$url);
 $restClient = new HttpClient();
 $result = $restClient->callResource('GET', $url, $data);
 if ($result['code'] != '200') {

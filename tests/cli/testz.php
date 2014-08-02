@@ -17,7 +17,7 @@ class Test extends BaseObject
     protected $dbm;
     const DEFAULT_ROWS_PER_REQUEST = 100;
 
-    protected $fields = array(
+    public $fields = array(
         'id' => array(
             'type' => 'char',
             'len'  => 36,
@@ -94,7 +94,7 @@ class Test extends BaseObject
 
     protected $api_fields;
     protected $database_columns;
-    protected $tableName = 'accounts';
+    public $tableName = 'accounts';
 
     /**
      *

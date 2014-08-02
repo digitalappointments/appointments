@@ -5,38 +5,39 @@ abstract class BaseObjectServices
     const DEFAULT_ROWS_PER_REQUEST = 20;
     public $className;
 
-    public function filter($options=array())
+    public function filter($filterOptions=array(), $options=array())
     {
         $baseObject = new $this->className();
 
         $rows = array();
-        if (empty($options['order_by'])) {
+        if (empty($filterOptions['order_by'])) {
             $order_by  = array();
             $order_dir = array();
         } else {
-            if (is_array($options['order_by'])) {
-                $order_by = $options['order_by'];
+            if (is_array($filterOptions['order_by'])) {
+                $order_by = $filterOptions['order_by'];
             } else {
-                $order_by = array($options['order_by']);
+                $order_by = array($filterOptions['order_by']);
             }
-            if (empty($options['order_dir'])) {
+            if (empty($filterOptions['order_dir'])) {
                 $order_dir  = array();
-            } elseif (is_array($options['order_dir'])) {
-                $order_dir = $options['order_dir'];
+            } elseif (is_array($filterOptions['order_dir'])) {
+                $order_dir = $filterOptions['order_dir'];
             } else {
-                $order_dir = array($options['order_dir']);
+                $order_dir = array($filterOptions['order_dir']);
             }
         }
 
-        $deleted = (!empty($options['deleted']));  // default: false - do not include deleted
-        $max_rows = empty($options['max_num']) ? self::DEFAULT_ROWS_PER_REQUEST : (int) $options['max_num'];
+        $deleted = (!empty($options['deleted']) && ($options['deleted'] === 'true'));  // default: false - do not include deleted
+
+        $max_rows = empty($filterOptions['max_num']) ? self::DEFAULT_ROWS_PER_REQUEST : (int) $filterOptions['max_num'];
 
         $stmt = false;
         try {
-            if (empty($options['fields']) || !is_array($options['fields'])) {
+            if (empty($filterOptions['fields']) || !is_array($filterOptions['fields'])) {
                 $fieldKeys = array_keys($baseObject->fields);
             } else {
-                $fieldKeys = $options['fields'];
+                $fieldKeys = $filterOptions['fields'];
                 foreach($fieldKeys as $fieldKey) {
                     if (!isset($baseObject->fields[$fieldKey])) {
                         throw new ServiceException(get_class() . " - No such field name {$fieldKey} on Field Select List for " . $this->className);
