@@ -2,7 +2,15 @@
 require_once(dirname(__FILE__) . "/../../lib/env/bootstrap.php");
 define('ENTRY_POINT_TYPE', 'test');
 
+if ($argc > 1) {
+    $id = $argv[1];
+} else {
+    printf("Required Argument: id\n\n");
+    exit;
+}
+
 include_once('tests/cli/HttpConfig.php');
+
 //----------------------------------------------------------------------------
 //require_once("lib/http/HttpClient.php");
 //HttpClient::addHeader("API_USER", md5("tjwolf"));
@@ -12,23 +20,24 @@ include_once('tests/cli/HttpConfig.php');
 //----------------------------------------------------------------------------
 
 
-
 $fields = array(
     "id", "firstName", "lastName", "dateModified", "addressCity"
 );
 $fieldSelector      = "fields="    . implode(",", $fields);
+$options            = "__deleted=true";   // all must be double_underscored variables
 
 $args = array(
     $fieldSelector,
+    // $options,
 );
 
-$qs = "?" . implode("&", $args);
-// echo $qs . "\n";
-
-$id = 'c6700dfc-623f-6efc-c12c-53c7468bc8f7';
-$url = "/users/{$id}" . $qs;
+$url = "/users/{$id}";
+if (!empty($args)) {
+    $url .= "?" . implode("&", $args);
+}
 
 printf("\n\n------ GET User ---------------  ID: %s\n", $id);
+printf("URL: %s\n",$url);
 $restClient = new HttpClient();
 $result = $restClient->callResource('GET', $url, $data);
 if ($result['code'] != '200') {

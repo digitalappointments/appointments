@@ -10,30 +10,32 @@ curl --header "API_USER: sugartraining1" 'http://campaigns.sugarcrmlabs.com/clou
 
 =========================================   
 
- curl --header 'API_USER: sugartraining1' 'http://localhost:8888/appointments/rest/v10/account/?order_by=id,name&order_dir=DESC&max_num=2&fields=name,dateModified,addressCity'
+curl --header 'API_USER: sugartraining1' 'http://localhost:8888/appointments/rest/v10/accounts/?order_by=dateEntered&order_dir=ASC&max_num=8&fields=name,dateEntered,dateModified,addressCity' | decode
 
-[{"name":"Once Upon A Time","dateModified":"2014-07-15 05:57:12","addressCity":"Madison"},{"name":"Once Upon A Time","dateModified":"2014-07-15 05:57:13","addressCity":"Madison"}]
-
-========================================= 
+=========================================
 
 
 -----------------------------------------------------------------------------------------------
 
-decode '[{"name":"Once Upon A Time","dateModified":"2014-07-15 05:57:12","addressCity":"Madison"},{"name":"Once Upon A Time","dateModified":"2014-07-15 05:57:13","addressCity":"Madison"}]'
+decode '[{"name":"Once Upon A Time","dateEntered":"2014-07-15 05:11:42","dateModified":"2014-07-15 05:11:42","addressCity":"Madison"},{"name":"Once Upon A Time","dateEntered":"2014-07-15 05:57:03","dateModified":"2014-07-15 05:57:03","addressCity":"Madison"}]'
+
+-----------------------------------------------------------------------------------------------
 
 Array
 (
     [0] => Array
         (
             [name] => Once Upon A Time
-            [dateModified] => 2014-07-15 05:57:12
+            [dateEntered] => 2014-07-15 05:11:42
+            [dateModified] => 2014-07-15 05:11:42
             [addressCity] => Madison
         )
 
     [1] => Array
         (
             [name] => Once Upon A Time
-            [dateModified] => 2014-07-15 05:57:13
+            [dateEntered] => 2014-07-15 05:57:03
+            [dateModified] => 2014-07-15 05:57:03
             [addressCity] => Madison
         )
 

@@ -88,7 +88,7 @@ class ServiceApi {
      * @param ServiceBase $api
      * @return array
      */
-    public function listResources(ServiceBase $api, $params)
+    public function listResources(ServiceBase $api, $params, $options=array())
     {
         if (empty($params['order_by'])) {
             $orderBy  = static::$default_order_by;
@@ -121,7 +121,7 @@ class ServiceApi {
         }
 
         $service = new $this->_resourceService();
-        $rows = $service->filter($filterOptions);
+        $rows = $service->filter($filterOptions, $options);
         //printf("ROWS = %d\n",count($rows));
 
         return $rows;
@@ -133,18 +133,15 @@ class ServiceApi {
      * @param ServiceBase $api
      * @return array
      */
-    public function getResource(ServiceBase $api, $params)
+    public function getResource(ServiceBase $api, $params, $options=array())
     {
-        $options = array();
         if (!empty($params['fields'])) {
             $fieldKeys  = explode(",", $params['fields']);
         }
 
-        // ~~~~~~~~~~~~~~~~~~~~~~   $options['deleted'] = true; // include deleted
-
         $id = $params['id'];
         $resource = new $this->_resourceName();
-        $success = $resource->retrieve($id,$options);
+        $success = $resource->retrieve($id, $options);
         if (!$success) {
             throw new ServiceApiExceptionNotFound("Resource Not Found");
         }
@@ -159,7 +156,7 @@ class ServiceApi {
      * @param ServiceBase $api
      * @return array
      */
-    public function createResource(ServiceBase $api, $params)
+    public function createResource(ServiceBase $api, $params, $options=array())
     {
         unset($params['id']);
         unset($params['deleted']);
@@ -167,8 +164,7 @@ class ServiceApi {
         unset($params['dateModified']);
 
         $resource = new $this->_resourceName($params);
-        $resource->insert();
-        // $resource->delete();
+        $resource->insert($options);
 
         $row = $resource->toApi();
         return $row;
@@ -180,7 +176,7 @@ class ServiceApi {
      * @param ServiceBase $api
      * @return array
      */
-    public function updateResource(ServiceBase $api, $params)
+    public function updateResource(ServiceBase $api, $params, $options=array())
     {
         $id = $params['id'];
         $resource = new $this->_resourceName();
@@ -190,12 +186,12 @@ class ServiceApi {
         unset($params['dateEntered']);
         unset($params['dateModified']);
 
-        $success = $resource->retrieve($id);
+        $success = $resource->retrieve($id, $options);
         if (!$success) {
             throw new ServiceApiExceptionNotFound("Resource Not Found");
         }
         $resource->applyValues($params);
-        $resource->update();
+        $resource->update($options);
 
         $row = $resource->toApi();
         return $row;
@@ -207,17 +203,18 @@ class ServiceApi {
      * @param ServiceBase $api
      * @return array
      */
-    public function deleteResource(ServiceBase $api, $params)
+    public function deleteResource(ServiceBase $api, $params, $options=array())
     {
         $id = $params['id'];
+
         $resource = new $this->_resourceName();
-        $success = $resource->retrieve($id);
+        $success = $resource->retrieve($id, $options);
         if (!$success) {
             throw new ServiceApiExceptionNotFound("Resource Not Found");
         }
 
-        $resource->markDeleted();
-        $resource->update();
+        $resource->markDeleted($options);
+        $resource->update($options);
         // $resource->delete();
 
         $row = $resource->toApi();

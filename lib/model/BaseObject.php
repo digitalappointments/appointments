@@ -100,7 +100,8 @@ abstract class BaseObject
             return false;
         }
 
-        $deleted = (!empty($options['deleted']));  // default: false - do not include deleted
+        $deleted = (!empty($options['deleted']) && ($options['deleted'] === 'true'));  // default: false - do not include deleted
+
         $stmt = false;
         try {
             $fieldKeys = array_keys($this->fields);
@@ -206,6 +207,8 @@ abstract class BaseObject
         $updateFields = array();
         $tm = time();
 
+        $deleted = (!empty($options['deleted']) && ($options['deleted'] === 'true'));  // default: false - do not include deleted
+
         if (!empty($options['fieldset'])) {  // If no empty, fieldset is an array of ields to be updated (as opposed to All Fields)
             $farray = $options['fieldset'];
             if (!is_array($farray) || count($farray) == 0) {
@@ -263,6 +266,9 @@ abstract class BaseObject
             }
         }
         $where = implode(' AND ', $whereArray);
+        if (!$deleted) {
+            $where .= " AND deleted = 0";
+        }
 
         $values = array_merge(array_values($updateFields), $primaryValues);
 
@@ -316,7 +322,7 @@ abstract class BaseObject
             throw new ServiceException("Cannot delete a " . get_class($this) . " without existing values for the primary key: {$primaryKeyList}.", Service::Error);
         }
 
-        $deleted = (!empty($options['deleted']));  // default: false - do not include deleted
+        $deleted = (!empty($options['deleted']) && ($options['deleted'] === 'true'));  // default: false - do not include deleted
 
         $where = implode(" = ? AND ", array_keys($this->primaryKeys));
         $where .= " = ?";

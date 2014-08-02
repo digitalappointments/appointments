@@ -167,14 +167,23 @@ class RestService extends ServiceBase
             $argArray = $this->getRequestArgs($route);
             unset($argArray['__url']);
 
+            $options = array();
+            foreach($argArray as $k => $v) {
+                if (strlen($k) > 2 && substr($k,0,2) == "__") {
+                    $options[substr($k,2)] = $v;
+                    unset($argArray[$k]);
+                }
+            }
+
             $headers = array();
             foreach ($this->special_headers as $header) {
                 if(isset($this->request_headers[$header])) {
                     $headers[$header] = $this->request_headers[$header];
                 }
             }
+
             if(!empty($headers)) {
-                $argArray['_headers'] = $headers;
+                $options['_headers'] = $headers;
             }
 
             $this->request->setArgs($argArray)->setRoute($route);
@@ -188,7 +197,7 @@ class RestService extends ServiceBase
 
             $this->handleErrorOutput('php_error_before_api');
 
-            $result = $apiClass->$apiMethod($this,$argArray);
+            $result = $apiClass->$apiMethod($this, $argArray, $options);
 
             $this->response->setContent($result);
             $this->respond($route, $argArray);
