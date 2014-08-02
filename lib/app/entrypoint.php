@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__)."/../../env/bootstrap.php");
+require_once(dirname(__FILE__)."/../env/bootstrap.php");
 define('ENTRY_POINT_TYPE', 'app');
 
 $httpRequestInfo = new HttpRequestInfo();
@@ -102,11 +102,6 @@ $httpRequestInfo->reqVars  = $reqVars;
 $httpRequestInfo->payload  = $payload;
 $controller->run($httpRequestInfo, $httpResponseInfo);
 
-$extraneousData = trim(ob_get_clean());
-if (strlen($extraneousData) >  0) {
-
-}
-
 include_once("lib/include/http_response_code.php");
 
 if ($httpResponseInfo->status >= 200 && $httpResponseInfo->status < 300) {
@@ -115,7 +110,7 @@ if ($httpResponseInfo->status >= 200 && $httpResponseInfo->status < 300) {
     if (strpos($httpRequestInfo->accept,"json") !== false) {
         $result = $httpResponseInfo->getResult(true);
     } else {
-        $result = $httpResponseInfo->getResult();
+        $result = $httpResponseInfo->getResult() . trim(ob_get_clean());
     }
     echo $result;
     exit(0);
