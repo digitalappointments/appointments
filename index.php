@@ -1,3 +1,2 @@
 <?php
-    include_once('app/entrypoint.php');
-?>
+include "core/index.php";

@@ -23,7 +23,9 @@ if (strpos($httpRequestInfo->accept, "json") === false) {
    printf("<PRE>\n");
 ?>
 
-   <img src="http://localhost:8888/tgm/app/tgm/images/corn_medium.jpg">
+   <img src="/tgm/images/corn_medium.jpg">
+
+   <img src="http://localhost:8888/tgm/images/corn_large.jpg">
 
 <?php
 }
