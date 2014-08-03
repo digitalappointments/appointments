@@ -1,0 +1,48 @@
+# Feel free to modify this file in your checkout.  It is NOT used to build packages for deployment
+# so changes you check in here will only affect you and other developers.
+# to make changes that actually affect production or staging, you need to modify the 
+# .htaccess file in svn+ssh://svn.broadation/icpconfig
+
+#php_flag display_errors on
+#php_flag html_errors on
+
+RewriteEngine on
+RewriteOptions inherit
+RewriteBase /
+
+##redirect people from the old api docs to the new api docs.
+RewriteRule api/doc/.* http://developer.icontact.com [R=301,L]
+RewriteRule api/v1\.0/.* core.php [R=501,L]
+
+RewriteRule track.pl track.php [L]
+RewriteRule relay.pl relay.php [L]
+RewriteRule signup.pl signup.php [L]
+RewriteRule mmail-addonline.pl signup.php [L]
+RewriteRule mmail-mprofile.pl mmail-mprofile.php [L]
+RewriteRule mmail-setprofile.pl mmail-setprofile.php [L]
+RewriteRule q.pl confirm.php?q=1 [L,QSA]
+RewriteRule q.php confirm.php?q=1 [L,QSA]
+RewriteRule mmail-changestatus.pl mmail-changestatus.php [L]
+RewriteRule anti-spam.pl /terms/anti-spam.php [L]
+RewriteRule loadimage.pl loadimage.php [L]
+RewriteRule ^(.*)(css|js)/(.*\.)\d+\.(css|js)$ $1$2/$3$4 [L]
+RewriteRule ^(.*)icpdata/f2f/(.*)\.png$ $1static/images/f2f/$2\.png [L]
+RewriteRule ^(.*)icpdata/images/(.*)$ $1static/images/$2 [L] 
+
+# redirect trialsignup to marketing site, except in the sandbox
+RewriteCond %{HTTP_HOST} !^app\.sandbox
+RewriteCond %{REQUEST_FILENAME} trialsignup.php
+RewriteRule ^(.+) %{HTTP_HOST}/$1 [C]
+RewriteRule app\.([^/]+)? https://www.$1/email-marketing-solution [R=301,L]
+
+## To enable API 2.0 requests:
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !.*static/js|static/help|static/css|static/images.*
+RewriteRule ^(.*)$ core.php/$1
+
+# begin enable xdebug
+php_value xdebug.remote_enable On
+php_value xdebug.remote_host 172.16.30.228
+php_value xdebug.remote_port 9370
+# end xdebug information

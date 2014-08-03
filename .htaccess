@@ -3,13 +3,18 @@ SetOutputFilter DEFLATE
 RewriteEngine On
 RewriteBase /appointments
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^rest/(.*)$ lib/rest/entrypoint.php?__url=$1 [L,QSA]
+# RewriteRule ^abc/def/(.*)$ dir1/file2.php?__url=$1 [L,QSA]
+RewriteRule ^css/(.*)$ app/tgm/css/$1 [L,QSA]
+RewriteRule ^js/(.*)$ app/tgm/js/$1 [L,QSA]
+RewriteRule ^images/(.*)$ app/tgm/images/$1 [L,QSA]
+RewriteRule ^app/(.*)$ app/entrypoint.php?__url=$1 [L,QSA]
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ index.php?__url=$1 [L,QSA]
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ core/index.php [L,QSA]
 
 # RewriteCond %{REQUEST_FILENAME} !-d
 # RewriteCond %{REQUEST_FILENAME} !-f
