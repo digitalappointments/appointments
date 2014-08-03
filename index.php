@@ -1,3 +1,3 @@
 <?php
-    include_once('lib/app/entrypoint.php');
+    include_once('app/entrypoint.php');
 ?>

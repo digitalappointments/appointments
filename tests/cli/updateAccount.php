@@ -38,7 +38,7 @@ if (!empty($args)) {
 }
 
 printf("\n\n------ UPDATE Account ---------------\n");
-printf("URL: %s\n",$url);
+printf("URL: %s\n",HttpClient::$URL_PREFIX . $url);
 $restClient = new HttpClient();
 $result = $restClient->callResource('PUT', $url, $data);
 if ($result['code'] != '200') {

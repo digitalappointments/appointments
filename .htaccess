@@ -6,8 +6,11 @@ RewriteBase /appointments
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^rest/(.*)$ lib/rest/entrypoint.php?__url=$1 [L,QSA]
-RewriteRule ^app/(.*)$ lib/app/entrypoint.php?__url=$1 [L,QSA] 
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?__url=$1 [L,QSA]
 
 # RewriteCond %{REQUEST_FILENAME} !-d
 # RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteRule ^(.+)$ lib/app/entrypoint.php?__url=$1 [L,QSA]
+# RewriteRule ^(.+)$ app/entrypoint.php?__url=$1 [L,QSA]

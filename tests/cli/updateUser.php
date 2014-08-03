@@ -22,7 +22,7 @@ include_once('tests/cli/HttpConfig.php');
 $data = array (
     'firstName' => 'Santa',
     'addressStreet' => '123 Maple Street',
-    'addressCity' => 'Milwafukee',
+    'addressCity' => 'Milwaukee',
 );
 
 $options            = "__deleted=true";   // all must be double_underscored variables
@@ -37,7 +37,7 @@ if (!empty($args)) {
 }
 
 printf("\n\n------ UPDATE User ---------------\n");
-printf("URL: %s\n",$url);
+printf("URL: %s\n",HttpClient::$URL_PREFIX . $url);
 $restClient = new HttpClient();
 $result = $restClient->callResource('PUT', $url, $data);
 if ($result['code'] != '200') {

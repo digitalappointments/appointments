@@ -58,6 +58,7 @@ $data = array (
 $url = "/users/";
 
 printf("\n\n------ CREATE User ---------------\n");
+printf("URL: %s\n",HttpClient::$URL_PREFIX . $url);
 $restClient = new HttpClient();
 $result = $restClient->callResource('POST', $url, $data);
 if ($result['code'] != '200') {

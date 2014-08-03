@@ -17,7 +17,18 @@ class HttpRequestInfo
     public $requestPath = '';
     public $queryString = '';
 
-    public $cookie;
-    public $payload;
+    public $args=array();
+    public $payload = '';
+    public $cookie = '';
+
     public $request_time;
+
+    public function setArgs() {
+        parse_str($this->queryString, $this->args);
+        return $this->getArgs();
+    }
+
+    public function getArgs() {
+        return $this->args;
+    }
 }

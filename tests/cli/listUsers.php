@@ -44,7 +44,7 @@ if (!empty($args)) {
 }
 
 printf("\n\n------ LIST Users ---------------\n");
-printf("URL: %s\n",$url);
+printf("URL: %s\n",HttpClient::$URL_PREFIX . $url);
 $restClient = new HttpClient();
 $result = $restClient->callResource('GET', $url, $data);
 if ($result['code'] != '200') {

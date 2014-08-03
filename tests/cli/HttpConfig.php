@@ -11,6 +11,6 @@ if ($remote === '1') {
 } else {
     HttpClient::$URL_PREFIX = 'http://localhost:8888/appointments/rest/v10';
 }
-printf("\nHost URL: %s\n\n", HttpClient::$URL_PREFIX);
+// printf("\nHost URL: %s\n\n", HttpClient::$URL_PREFIX);
 //----------------------------------------------------------------------------
 

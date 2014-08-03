@@ -22,7 +22,7 @@ include_once('tests/cli/HttpConfig.php');
 $url = "/accounts/{$id}";
 
 printf("\n\n------ DELETE Account ---------------\n");
-printf("URL: %s\n",$url);
+printf("URL: %s\n",HttpClient::$URL_PREFIX . $url);
 $restClient = new HttpClient();
 $result = $restClient->callResource('DELETE', $url, $data);
 if ($result['code'] != '200') {

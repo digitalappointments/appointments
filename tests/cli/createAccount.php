@@ -54,8 +54,10 @@ $data = array (
 $url = "/accounts/";
 
 printf("\n\n------ CREATE Account ---------------\n");
+printf("URL: %s\n",HttpClient::$URL_PREFIX . $url);
 $restClient = new HttpClient();
-$result = $restClient->callResource('POST', $url, $data);
+$result = $restClient->callResource('POST', $url, $data);  
+print_r($result);
 if ($result['code'] != '200') {
     print_r($result);
     echo "\n";

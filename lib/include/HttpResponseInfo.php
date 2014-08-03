@@ -7,15 +7,17 @@ class HttpResponseInfo {
     function getResult($asJson = false)
     {
         if ($asJson) {
-            $result = array(
-                "status" => $this->status,
-                "data" => $this->data,
-            );
-           return json_encode($result, true);
-        }
+//            $result = array(
+//                "status" => $this->status,
+//                "data" => $this->data,
+//            );
+//           return json_encode($result, true);
+
+            return json_encode($this->data, true);
+         }
 
         if (is_array($this->data)) {
-            return print_r($this->data);
+            return print_r($this->data, true);
         }
 
         return $this->data; // presumably string
