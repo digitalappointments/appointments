@@ -44,9 +44,11 @@ if (!empty($args)) {
 }
 
 printf("\n\n------ LIST Accounts ---------------\n");
-printf("URL: %s\n",$url);
+printf("URL: %s\n",HttpClient::$URL_PREFIX . $url);
 $restClient = new HttpClient();
-$result = $restClient->callResource('GET', $url, $data);
+$result = $restClient->callResource('GET', $url, $data);   
+print_r($result);
+
 if ($result['code'] != '200') {
     print_r($result);
     echo "\n";

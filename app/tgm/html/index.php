@@ -1,14 +1,14 @@
 <html>
 <head>
     <?php
-    include_once("lib/app/tgm/html/initialize.php");
+    include_once("app/tgm/html/initialize.php");
     $FILE_INFO = getFileInfo(__FILE__);
     if ($FILE_INFO["PathInfo"]["filename"] == 'index') {
         define("CONTENT_PAGE", 'home');
     } else {
         define("CONTENT_PAGE", $FILE_INFO["PathInfo"]["filename"]);
     }
-    include_once("lib/app/tgm/html/head.php");
+    include_once("app/tgm/html/head.php");
     ?>
 </head>
 
@@ -17,7 +17,7 @@
 <table align="center" width="950" cellpadding=0 cellspacing=0 border=0>
     <?php
     // echo "--- " . CONTENT_PAGE . " ---<br>";
-    include_once("lib/app/tgm/html/menu.php");
+    include_once("app/tgm/html/menu.php");
     ?>
 </table>
 
@@ -28,7 +28,7 @@
         <td>
             <div id="page_content">
                 <?php
-                include_once("lib/app/tgm/content/" . CONTENT_PAGE . ".php");
+                include_once("app/tgm/content/" . CONTENT_PAGE . ".php");
                 ?>
             </div>
         </td>
@@ -37,7 +37,7 @@
 <!------------------------>
 
 <table align="center" width="950" cellpadding=0 cellspacing=0 border=0>
-    <?php include_once("lib/app/tgm/html/footer.php");?>
+    <?php include_once("app/tgm/html/footer.php");?>
 </table>
 
 </body>

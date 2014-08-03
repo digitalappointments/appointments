@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__)."/../env/bootstrap.php");
+require_once(dirname(__FILE__)."/../lib/env/bootstrap.php");
 define('ENTRY_POINT_TYPE', 'app');
 
 $httpRequestInfo = new HttpRequestInfo();
@@ -42,6 +42,8 @@ for ($i = 0; $i < count($_uri_tokens_); $i++) {
 
 $httpRequestInfo->requestPath =  implode('/',$URI_ELEMENTS);
 $httpRequestInfo->queryString = $_qs_;
+$httpRequestInfo->setArgs();
+
 unset($IGNORE_TOKENS);
 unset($tcount);
 unset($URI_ELEMENTS);
@@ -57,13 +59,13 @@ unset($i);
  *******************/
 
 $httpRequestInfo->controllerClassName = "DefaultController";
-$httpRequestInfo->controllerFile = "lib/app/{$httpRequestInfo->controllerClassName}.php";
+$httpRequestInfo->controllerFile = "app/{$httpRequestInfo->controllerClassName}.php";
 if (!empty($httpRequestInfo->applicationName)) {
     $app_name = str_replace("_", " ", $httpRequestInfo->applicationName);
     $app_name = ucwords($app_name);
     $app_name = str_replace(" ", "", $app_name);
 
-    $app_controller = "lib/app/{$httpRequestInfo->applicationName}/{$app_name}Controller.php";
+    $app_controller = "app/{$httpRequestInfo->applicationName}/{$app_name}Controller.php";
     if (file_exists($app_controller)) {
         $httpRequestInfo->controllerFile = $app_controller;
         $httpRequestInfo->controllerClassName = "{$app_name}Controller";
@@ -78,7 +80,7 @@ $httpResponseInfo = new HttpResponseInfo();
 
 ob_start();
 
-//$include_file = "lib/app/{$httpRequestInfo->applicationName}/html/index.php";
+//$include_file = "app/{$httpRequestInfo->applicationName}/html/index.php";
 //if (file_exists($include_file)) {
 //    include($include_file);
 //    unset($include_file);
@@ -87,9 +89,9 @@ ob_start();
 $postVars = $_POST;
 $getVars  = $_GET;
 $reqVars  = $_REQUEST;
-$payload  = null;
+$payload  = '';
 if ( ($httpRequestInfo->requestMethod == 'POST' || $httpRequestInfo->requestMethod == 'PUT') &&
-     strpos($httpRequestInfo->contentType,"json") !== false) {
+     strpos($httpRequestInfo->accept,"json") !== false) {
     $rawData = file_get_contents('php://input');
     if (!empty($rawData)) {
         $payload = json_decode($rawData, true);
@@ -110,7 +112,7 @@ if ($httpResponseInfo->status >= 200 && $httpResponseInfo->status < 300) {
     if (strpos($httpRequestInfo->accept,"json") !== false) {
         $result = $httpResponseInfo->getResult(true);
     } else {
-        $result = $httpResponseInfo->getResult() . trim(ob_get_clean());
+        $result = $httpResponseInfo->getResult();  // . trim(ob_get_clean());
     }
     echo $result;
     exit(0);

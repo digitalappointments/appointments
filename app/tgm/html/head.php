@@ -5,17 +5,17 @@
 <META name="ROBOTS" content="ALL">
 <META http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
-<link rel="shortcut icon" href="lib/app/tgm/images/favicon.ico"/>
+<link rel="shortcut icon" href="app/tgm/images/favicon.ico"/>
 
-<LINK type=text/css rel=stylesheet href="lib/app/tgm/css/styles.css">
-<LINK type=text/css rel=stylesheet href="lib/app/tgm/js/modal/subModal.css">
+<LINK type=text/css rel=stylesheet href="app/tgm/css/styles.css">
+<LINK type=text/css rel=stylesheet href="app/tgm/js/modal/subModal.css">
 
-<!-- script type="text/javascript" src="lib/app/tgm/js/modal/subModal.js"></script -->
-<!-- script type="text/javascript" src="lib/app/tgm/js/flowplayer-3.1.2.min.js"></script -->
-<script type="text/javascript" src="lib/app/tgm/js/jquery.js"></script>
-<script type="text/javascript" src="lib/app/tgm/js/common.js"></script>
-<script type="text/javascript" src="lib/app/tgm/js/jsutils.js"></script>
-<script type="text/javascript" src="lib/app/tgm/js/main_menu.js"></script>
+<!-- script type="text/javascript" src="app/tgm/js/modal/subModal.js"></script -->
+<!-- script type="text/javascript" src="app/tgm/js/flowplayer-3.1.2.min.js"></script -->
+<script type="text/javascript" src="app/tgm/js/jquery.js"></script>
+<script type="text/javascript" src="app/tgm/js/common.js"></script>
+<script type="text/javascript" src="app/tgm/js/jsutils.js"></script>
+<script type="text/javascript" src="app/tgm/js/main_menu.js"></script>
 
 
 <script type="text/javascript">
@@ -66,14 +66,15 @@
             },
             success:function (response, textStatus) {
                 var data = '';
-                if (textStatus === "success" && response.status === 200 && response.data.length) {
+                debugger;
+                if (textStatus === "success" && response.length) {
                     last_active_page = active_page;
                     active_page = last_page_attempt;
                     setActivePage();
                     // var resp = JSON.parse(response); //parse JSON
                     // var resp = $.parseJSON(response); //parse JSON
-                    if (response.data.length > 0) {
-                        data = response.data;
+                    if (response.length > 0) {
+                        data = response;
                     }
                 }
                 var el = document.getElementById("page_content");
@@ -106,11 +107,11 @@
 
             function setImage(image_name) {
                 var img_normal = new Image();
-                img_normal.src = 'lib/app/tgm/images/btn_' + image_name + '.png';
+                img_normal.src = 'app/tgm/images/btn_' + image_name + '.png';
                 var img_hover = new Image();
-                img_hover.src = 'lib/app/tgm/images/btn_' + image_name + '_h.png';
+                img_hover.src = 'app/tgm/images/btn_' + image_name + '_h.png';
                 var img_active = new Image();
-                img_active.src = 'lib/app/tgm/images/btn_' + image_name + '_a.png';
+                img_active.src = 'app/tgm/images/btn_' + image_name + '_a.png';
 
                 main_menu_buttons[image_name] = { 'normal':img_normal,
                     'hover':img_hover,
